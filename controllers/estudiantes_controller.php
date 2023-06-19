@@ -1,35 +1,52 @@
 <?php
+<?php
 require_once __DIR__ . '/../connection/connection.php';
 require_once __DIR__ . '/../models/estudiantes.php';
 
-$dbConnection = DatabaseConnection::getInstance();
-$estudiantesModel = new Estudiantes($dbConnection);
+class EstudiantesController {
+    private $dbConnection;
+    private $estudiantesModel;
 
-// Manejar la solicitud para agregar un estudiante
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
-    $codEstudiante = $_POST['cod_est'];
-    $nombreEstudiante = $_POST['nomb_est'];
-    $estudiantesModel->createEstudiante($codEstudiante, $nombreEstudiante);
+    public function __construct() {
+        $this->dbConnection = DatabaseConnection::getInstance();
+        $this->estudiantesModel = new Estudiantes($this->dbConnection);
+    }
+
+    public function handleRequest() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['agregar'])) {
+                $this->handleAgregarEstudiante();
+            } elseif (isset($_POST['actualizar'])) {
+                $this->handleActualizarEstudiante();
+            } elseif (isset($_POST['eliminar'])) {
+                $this->handleEliminarEstudiante();
+            }
+        }
+
+        $estudiantesData = $this->estudiantesModel->getAllEstudiantes();
+        require __DIR__ . '/../index.php';
+    }
+
+    private function handleAgregarEstudiante() {
+        $codEstudiante = $_POST['cod_est'];
+        $nombreEstudiante = $_POST['nomb_est'];
+        $this->estudiantesModel->createEstudiante($codEstudiante, $nombreEstudiante);
+    }
+
+    private function handleActualizarEstudiante() {
+        $codEstudiante = $_POST['cod_est'];
+        $nombreEstudiante = $_POST['nomb_est'];
+        $this->estudiantesModel->updateEstudiante($codEstudiante, $nombreEstudiante);
+    }
+
+    private function handleEliminarEstudiante() {
+        $codEstudiante = $_POST['cod_est'];
+        $this->estudiantesModel->deleteEstudiante($codEstudiante);
+    }
 }
 
-// Manejar la solicitud para actualizar un estudiante
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actualizar'])) {
-    $codEstudiante = $_POST['cod_est'];
-    $nombreEstudiante = $_POST['nomb_est'];
-    $estudiantesModel->updateEstudiante($codEstudiante, $nombreEstudiante);
-}
+$estudiantesController = new EstudiantesController();
+$estudiantesController->handleRequest();
 
-// Manejar la solicitud para eliminar un estudiante
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar'])) {
-    $codEstudiante = $_POST['cod_est'];
-}
-
-// Obtener todos los estudiantes
-$estudiantesData = $estudiantesModel->getAllEstudiantes();
-var_dump($estudiantesData);
-
-// Renderizar la vista pasando los datos necesarios
-require __DIR__ . '/../index.php';
-exit();
 
 ?>
