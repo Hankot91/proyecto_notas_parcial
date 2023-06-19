@@ -26,30 +26,36 @@
             <th>Nombre</th>
             <th>Acciones</th>
         </tr>
-        <?php foreach ($estudiantesData as $estudiante): ?>
-            <tr>
-                <td>
-                    <?php echo $estudiante['cod_est']; ?>
-                </td>
-                <td>
-                    <?php echo $estudiante['nomb_est']; ?>
-                </td>
-                <td>
-                    <!-- Formulario para editar un estudiante -->
-                    <form method="POST" action="/controllers/estudiantes_controller.php">
-                        <input type="hidden" name="cod_est" value="<?php echo $estudiante['cod_est']; ?>">
-                        <input type="text" name="nomb_est" placeholder="Nuevo nombre" required>
-                        <input type="submit" name="actualizar" value="Actualizar estudiante">
-                    </form>
+        <?php if (!empty($estudiantesData)): ?>
+            <?php foreach ($estudiantesData as $estudiante): ?>
+                <tr>
+                    <td>
+                        <?php echo $estudiante['cod_est']; ?>
+                    </td>
+                    <td>
+                        <?php echo $estudiante['nomb_est']; ?>
+                    </td>
+                    <td>
+                        <!-- Formulario para editar un estudiante -->
+                        <form method="POST" action="/controllers/estudiantes_controller.php">
+                            <input type="hidden" name="cod_est" value="<?php echo $estudiante['cod_est']; ?>">
+                            <input type="text" name="nomb_est" placeholder="Nuevo nombre" required>
+                            <input type="submit" name="actualizar" value="Actualizar estudiante">
+                        </form>
 
-                    <!-- Formulario para eliminar un estudiante -->
-                    <form method="POST" action="/controllers/estudiantes_controller.php">
-                        <input type="hidden" name="cod_est" value="<?php echo $estudiante['cod_est']; ?>">
-                        <input type="submit" name="eliminar" value="Eliminar">
-                    </form>
-                </td>
+                        <!-- Formulario para eliminar un estudiante -->
+                        <form method="POST" action="/controllers/estudiantes_controller.php">
+                            <input type="hidden" name="cod_est" value="<?php echo $estudiante['cod_est']; ?>">
+                            <input type="submit" name="eliminar" value="Eliminar">
+                        </form>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else : ?>
+            <tr>
+                <td colspan="3">No hay estudiantes registrados.</td>
             </tr>
-        <?php endforeach; ?>
+        <?php endif; ?>
 
     </table>
 </body>

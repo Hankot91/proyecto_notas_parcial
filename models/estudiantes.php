@@ -22,17 +22,11 @@ class Estudiantes{
     {
         $query = "SELECT * FROM estudiantes";
         $stmt = $this->dbConnection->getConnection()->query($query);
-    
-        if (!$stmt) {
-            // Manejar el error en caso de consulta fallida
-            $errorInfo = $this->dbConnection->getConnection()->errorInfo();
-            echo "Error en la consulta: " . $errorInfo[2];
-            return [];
-        }
-    
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $estudiantesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $estudiantesData;
     }
     
+
 
     public function updateEstudiante($codEstudiante, $nombreEstudiante)
     {

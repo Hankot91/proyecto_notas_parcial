@@ -22,13 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actualizar'])) {
 // Manejar la solicitud para eliminar un estudiante
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar'])) {
     $codEstudiante = $_POST['cod_est'];
-    $estudiantesModel->deleteEstudiante($codEstudiante);
 }
 
 // Obtener todos los estudiantes
 $estudiantesData = $estudiantesModel->getAllEstudiantes();
+var_dump($estudiantesData);
 
 // Renderizar la vista pasando los datos necesarios
-require_once __DIR__ . '/../index.php';
+require __DIR__ . '/../index.php';
+exit();
 
 ?>
