@@ -58,5 +58,10 @@ ALTER TABLE calificaciones
 ADD CONSTRAINT fk_periodo FOREIGN KEY (periodo, anho, cod_cur, cod_est)
 REFERENCES inscripciones(periodo, anho, cod_cur, cod_est);
 
-INSERT INTO estudiantes (cod_est, nomb_est)
-VALUES (1, 'Juan Pérez');
+
+COPY estudiantes FROM '../dates/estudiantes.csv' 
+WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'LATIN1');
+
+//si no sirve el copy usar este
+\copy estudiantes FROM '../dates/estudiantes.csv' 
+WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'latin1');
