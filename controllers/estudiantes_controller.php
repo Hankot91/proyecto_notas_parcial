@@ -1,5 +1,5 @@
 <?php
-<?php
+
 require_once __DIR__ . '/../connection/connection.php';
 require_once __DIR__ . '/../models/estudiantes.php';
 
