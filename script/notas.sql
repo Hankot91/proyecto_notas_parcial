@@ -62,6 +62,15 @@ REFERENCES inscripciones(periodo, anho, cod_cur, cod_est);
 COPY estudiantes FROM '../dates/estudiantes.csv' 
 WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'LATIN1');
 
-//si no sirve el copy usar este
+COPY cursos FROM '../dates/cursos.csv' 
+WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'LATIN1');
+
+COPY cursos FROM '/../dates/inscripciones.csv' 
+WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'LATIN1');
+
+//si no sirve el "COPY" usar :
 \copy estudiantes FROM '../dates/estudiantes.csv' WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'latin1');
 
+\copy cursos FROM '../dates/cursos.csv' WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'latin1');
+
+\copy inscripciones FROM '../dates/inscripciones.csv' WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'latin1');

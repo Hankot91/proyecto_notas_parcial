@@ -7,5 +7,6 @@
 </head>
 <body>
     <a href="/views/estudiantes_view.php">Estudiantes</a>
+    <a href="/views/cursos_view.php">Cursos</a>
 </body>
 </html>

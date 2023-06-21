@@ -28,8 +28,9 @@ class Estudiantes{
 
     public function getEstudiante($codEstudiante)
     {
-        $query = "SELECT * FROM estudiantes WHERE cod_est = '$codEstudiante'";
-        $stmt = $this->dbConnection->getConnection()->query($query);
+        $query = "SELECT * FROM estudiantes WHERE cod_est = ?";
+        $stmt = $this->dbConnection->getConnection()->prepare($query);
+        $stmt->execute([$codEstudiante]);
         $estudiantesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $estudiantesData;
     }

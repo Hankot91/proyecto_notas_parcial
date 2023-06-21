@@ -16,10 +16,15 @@
 </head>
 
 <body>
+    <header>
+        <nav>
+            <a href="../index.php">Inicio</a>
+        </nav>
+    </header>
     <h1>Listado de Estudiantes</h1>
 
     <!-- Formulario para agregar un estudiante -->
-    <form method="POST" action="">
+    <form method="POST">
         <input type="text" name="cod_est" placeholder="Código del estudiante" required>
         <input type="text" name="nomb_est" placeholder="Nombre del estudiante" required>
         <input type="submit" name="agregar" value="Agregar estudiante">
@@ -31,12 +36,14 @@
     </form>
 
     <br>
-    <a href="/views/estudiantes_view.php?view=true">Ver todos los estudiantes</a>
+    <a href="/views/estudiantes_view.php?view=true">Ver todos</a>
+
     <br>
     <?php if ($getView === false ):?>
         <?php require_once "footer.php";?>
     <?php else: ?>
     <!-- Mostrar la lista de estudiantes -->
+    <a href="../views/estudiantes_view.php">Ocultar</a>
         <table>
             <tr>
                 <th>Código</th>
@@ -54,7 +61,7 @@
                         </td>
                         <td>
                             <!-- Formulario para editar un estudiante -->
-                            <form method="POST" action=" ">
+                            <form method="POST">
                                 <input type="hidden" name="cod_est" value="<?php echo $estudiante['cod_est']; ?>">
                                 <input type="text" name="nomb_est" placeholder="Nuevo nombre" required>
                                 <input type="submit" name="actualizar" value="Actualizar estudiante">
@@ -62,7 +69,7 @@
                         </td>
                         <td>
                             <!-- Formulario para eliminar un estudiante -->
-                            <form method="POST" action=" ">
+                            <form method="POST">
                                 <input type="hidden" name="cod_est" value="<?php echo $estudiante['cod_est']; ?>">
                                 <input type="submit" name="eliminar" value="Eliminar">
                             </f orm>

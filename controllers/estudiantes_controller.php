@@ -2,8 +2,9 @@
 
 require_once __DIR__ . '/../connection/connection.php';
 require_once __DIR__ . '/../models/estudiantes.php';
+require_once "../controllers/controller.php";
 
-class EstudiantesController {
+class EstudiantesController implements Controller{
     private $dbConnection;
     private $estudiantesModel;
 
@@ -15,40 +16,39 @@ class EstudiantesController {
     public function handleRequest() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['agregar'])) {
-                $this->handleAgregarEstudiante();
-            } elseif (isset($_POST['actualizar'])) {
-                $this->handleActualizarEstudiante();
+                $this->handleCreate();
+            }elseif (isset($_POST['actualizar'])) {
+                $this->handleUpdate();
             } elseif (isset($_POST['eliminar'])) {
-                $this->handleEliminarEstudiante();
+                $this->handleDelete();
             }
         }
+        
         if ($_SERVER['REQUEST_METHOD'] === 'GET'){
             if(isset($_GET['cod_est'])){
                 return $this->estudiantesModel->getEstudiante($_GET['cod_est']);
             }
         }
         return $this->handleReturnAll();
-        //$estudiantesData = $this->estudiantesModel->getAllEstudiantes();
-        //require __DIR__ . '/../views/estudiantes_view.php';
     }
 
     public function handleReturnAll(){
         return $this->estudiantesModel->getAllEstudiantes();
     }
 
-    private function handleAgregarEstudiante() {
+    public  function handleCreate() {
         $codEstudiante = $_POST['cod_est'];
         $nombreEstudiante = $_POST['nomb_est'];
         $this->estudiantesModel->createEstudiante($codEstudiante, $nombreEstudiante);
     }
 
-    private function handleActualizarEstudiante() {
+    public  function handleUpdate() {
         $codEstudiante = $_POST['cod_est'];
         $nombreEstudiante = $_POST['nomb_est'];
         $this->estudiantesModel->updateEstudiante($codEstudiante, $nombreEstudiante);
     }
 
-    private function handleEliminarEstudiante() {
+    public  function handleDelete() {
         $codEstudiante = $_POST['cod_est'];
         $this->estudiantesModel->deleteEstudiante($codEstudiante);
     }
