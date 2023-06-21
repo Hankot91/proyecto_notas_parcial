@@ -22,9 +22,18 @@ class EstudiantesController {
                 $this->handleEliminarEstudiante();
             }
         }
+        if ($_SERVER['REQUEST_METHOD'] === 'GET'){
+            if(isset($_GET['cod_est'])){
+                return $this->estudiantesModel->getEstudiante($_GET['cod_est']);
+            }
+        }
+        return $this->handleReturnAll();
+        //$estudiantesData = $this->estudiantesModel->getAllEstudiantes();
+        //require __DIR__ . '/../views/estudiantes_view.php';
+    }
 
-        $estudiantesData = $this->estudiantesModel->getAllEstudiantes();
-        require __DIR__ . '/../index.php';
+    public function handleReturnAll(){
+        return $this->estudiantesModel->getAllEstudiantes();
     }
 
     private function handleAgregarEstudiante() {
@@ -45,8 +54,3 @@ class EstudiantesController {
     }
 }
 
-$estudiantesController = new EstudiantesController();
-$estudiantesController->handleRequest();
-
-
-?>

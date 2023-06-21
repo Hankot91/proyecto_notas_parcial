@@ -63,5 +63,5 @@ COPY estudiantes FROM '../dates/estudiantes.csv'
 WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'LATIN1');
 
 //si no sirve el copy usar este
-\copy estudiantes FROM '../dates/estudiantes.csv' 
-WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'latin1');
+\copy estudiantes FROM '../dates/estudiantes.csv' WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'latin1');
+

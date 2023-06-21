@@ -25,6 +25,14 @@ class Estudiantes{
         $estudiantesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $estudiantesData;
     }
+
+    public function getEstudiante($codEstudiante)
+    {
+        $query = "SELECT * FROM estudiantes WHERE cod_est = '$codEstudiante'";
+        $stmt = $this->dbConnection->getConnection()->query($query);
+        $estudiantesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $estudiantesData;
+    }
     
     public function updateEstudiante($codEstudiante, $nombreEstudiante)
     {
