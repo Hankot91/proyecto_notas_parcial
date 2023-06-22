@@ -3,51 +3,70 @@
 require_once __DIR__ . '/../connection/connection.php';
 require_once __DIR__ . '/../models/cursos.php';
 require_once "../controllers/controller.php";
-class cursosController implements Controller{
+class cursosController implements Controller
+{
     private $dbConnection;
     private $cursosModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->dbConnection = DatabaseConnection::getInstance();
         $this->cursosModel = new Cursos($this->dbConnection);
     }
 
-    public function handleRequest(){
+    public function handleRequest()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['agregar'])) {
                 $this->handleCreate();
-            }elseif (isset($_POST['actualizar'])) {
+            } elseif (isset($_POST['actualizar'])) {
                 $this->handleUpdate();
             } elseif (isset($_POST['eliminar'])) {
                 $this->handleDelete();
             }
         }
-        
-        if ($_SERVER['REQUEST_METHOD'] === 'GET'){
-            if(isset($_GET['cod_cur'])){
+
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            if (isset($_GET['cod_cur'])) {
                 return $this->cursosModel->getCurso($_GET['cod_cur']);
             }
         }
         return $this->handleReturnAll();
     }
 
-    public function handleReturnAll(){
+    public function handleReturnAll()
+    {
         return $this->cursosModel->getAllCursos();
     }
 
-    public function handleCreate(){
+    public function handleCreate()
+    {
         $codCurso = $_POST['cod_cur'];
         $nombreCurso = $_POST['nomb_cur'];
-        $this->cursosModel->createCurso($codCurso, $nombreCurso);
+        $cursoExistente = $this->cursosModel->getCurso($codCurso);
+        if ($cursoExistente) {
+            echo "<script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                            let parrafo = document.querySelector('.mensaje_error');
+                                            if (parrafo) {
+                                            parrafo.textContent = 'El código de curso ya existe. Por favor, elige otro código.';
+                                        }
+                                });
+                            </script>";
+        } else {
+            $this->cursosModel->createCurso($codCurso, $nombreCurso);
+        }
     }
 
-    public function handleUpdate(){
+    public function handleUpdate()
+    {
         $codCurso = $_POST['cod_cur'];
         $nombreCurso = $_POST['nomb_cur'];
         $this->cursosModel->updateCurso($codCurso, $nombreCurso);
     }
 
-    public function handleDelete(){
+    public function handleDelete()
+    {
         $codCurso = $_POST['cod_cur'];
         $this->cursosModel->deleteCurso($codCurso);
     }

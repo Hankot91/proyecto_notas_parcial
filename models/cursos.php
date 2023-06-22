@@ -3,7 +3,8 @@
 //Trayendo el paquete de conecion con la db
 require_once __DIR__ . '/../connection/connection.php';
 
-class Cursos{
+class Cursos
+{
     private $dbConnection;
 
     public function __construct(DatabaseConnection $dbConnection)
@@ -31,8 +32,8 @@ class Cursos{
         $query = "SELECT * FROM cursos WHERE cod_cur = ?";
         $stmt = $this->dbConnection->getConnection()->prepare($query);
         $stmt->execute([$codCurso]);
-        $estudiantesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $estudiantesData;
+        $cursoData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $cursoData;
     }
 
     public function updateCurso($codCurso, $nombreCurso)

@@ -1,8 +1,8 @@
 <?php
-    require_once "../controllers/cursos_controller.php";
-    $cursosData = (new CursosController())->handleRequest();
-    $getView =isset( $_GET['view'] ) || isset($_GET['cod_cur']) ;
-    
+require_once "../controllers/cursos_controller.php";
+$cursosData = (new CursosController())->handleRequest();
+$getView = isset($_GET['view']) || isset($_GET['cod_cur']);
+
 ?>
 
 <!DOCTYPE html>
@@ -25,13 +25,14 @@
 
     <!-- Formulario para agregar un estudiante -->
     <form method="POST">
-        <input type="text" name="cod_cur" placeholder="Código del curso" required>
+        <input type="number" name="cod_cur" placeholder="Código del curso" required>
         <input type="text" name="nomb_cur" placeholder="Nombre del curso" required>
         <input type="submit" name="agregar" value="Agregar curso">
     </form>
+    <p class="mensaje_error"></p>
 
     <form method="GET" action="">
-        <input type="text" name="cod_cur" placeholder="Código del curso" required>
+        <input type="number" name="cod_cur" placeholder="Código del curso" required>
         <input type="submit" name="buscar" value="Buscar curso">
     </form>
 
@@ -39,18 +40,18 @@
     <a href="/views/cursos_view.php?view=true">Ver todos</a>
 
     <br>
-    <?php if ($getView === false ):?>
-        <?php require_once "footer.php";?>
+    <?php if ($getView === false): ?>
+        <?php require_once "footer.php"; ?>
     <?php else: ?>
-    <!-- Mostrar la lista de cursos -->
-    <a href="../views/cursos_view.php">Ocultar</a>
+        <!-- Mostrar la lista de cursos -->
+        <a href="../views/cursos_view.php">Ocultar</a>
         <table>
             <tr>
                 <th>Código</th>
                 <th>Nombre</th>
                 <th>Acciones</th>
             </tr>
-            <?php if (!empty($cursosData) ): ?>
+            <?php if (!empty($cursosData)): ?>
                 <?php foreach ($cursosData as $curso): ?>
                     <tr>
                         <td>
@@ -72,7 +73,7 @@
                             <form method="POST">
                                 <input type="hidden" name="cod_cur" value="<?php echo $curso['cod_cur']; ?>">
                                 <input type="submit" name="eliminar" value="Eliminar">
-                            </f orm>
+                                </f orm>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -83,7 +84,7 @@
             <?php endif; ?>
 
         </table>
-        <?php endif; ?>
+    <?php endif; ?>
 </body>
 
 </html>

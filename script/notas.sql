@@ -6,6 +6,7 @@ CREATE TABLE estudiantes(
 )
 
 CREATE TABLE inscripciones(
+    cod_inscripcion INTEGER CHECK (cod_inscripcion >= 0) PRIMARY KEY NOT NULL,
     periodo INTEGER NOT NULL CHECK (periodo IN (1,  2)),
     anho INTEGER CHECK (anho <= date_part('year', current_date)),
     cod_cur INTEGER,
@@ -29,34 +30,34 @@ CREATE TABLE calificaciones(
     cod_cal  INTEGER CHECK (cod_cal >= 0) PRIMARY KEY NOT NULL,
     valor INTEGER CHECK(valor >= 0 AND valor <= 5),
     fecha DATE CHECK(fecha <= CURRENT_DATE),
-    cod_cur INTEGER,
-    cod_est INTEGER,
-    periodo INTEGER,
-    anho INTEGER,
+    cod_inscripcion INTEGER,
     nota VARCHAR(30)
 )
 
 //Agragando los constrain y restricciones  a inscripciones//
-ALTER TABLE inscripciones 
-ADD PRIMARY KEY(periodo, anho, cod_cur, cod_est);
 ALTER TABLE inscripciones
-ADD CONSTRAINT fk_cod_est FOREIGN KEY (cod_est) REFERENCES estudiantes(cod_est);
+ADD CONSTRAINT fk_cod_est FOREIGN KEY (cod_est) REFERENCES estudiantes(cod_est) 
+ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE inscripciones
-ADD CONSTRAINT fk_cod_cur FOREIGN KEY (cod_cur) REFERENCES cursos(cod_cur);
+ADD CONSTRAINT fk_cod_cur FOREIGN KEY (cod_cur) REFERENCES cursos(cod_cur)
+ON DELETE CASCADE ON UPDATE CASCADE;
 
 
 //Agragando los constrain y restricciones  a notas//
 ALTER TABLE notas
-ADD CONSTRAINT fk_cod_cur FOREIGN KEY (cod_cur) REFERENCES cursos(cod_cur);
+ADD CONSTRAINT fk_cod_cur FOREIGN KEY (cod_cur) REFERENCES cursos(cod_cur)
+ON DELETE CASCADE ON UPDATE CASCADE;
 
 
 //Agragando los constrain y restricciones  a calificaciones//
 ALTER TABLE calificaciones
-ADD CONSTRAINT fk_nota FOREIGN KEY (nota) REFERENCES notas (nota);
+ADD CONSTRAINT fk_nota FOREIGN KEY (nota) REFERENCES notas (nota)
+ON DELETE RESTRICT ON UPDATE CASCADE;
 
 ALTER TABLE calificaciones
-ADD CONSTRAINT fk_periodo FOREIGN KEY (periodo, anho, cod_cur, cod_est)
-REFERENCES inscripciones(periodo, anho, cod_cur, cod_est);
+ADD CONSTRAINT fk_inscripciones FOREIGN KEY (cod_inscripcion)
+REFERENCES inscripciones(cod_inscripcion)
+ON DELETE CASCADE ON UPDATE CASCADE;
 
 
 COPY estudiantes FROM '../dates/estudiantes.csv' 

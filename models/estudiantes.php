@@ -2,7 +2,8 @@
 //Trayendo el paquete de conecion con la db
 require_once __DIR__ . '/../connection/connection.php';
 
-class Estudiantes{
+class Estudiantes
+{
 
     private $dbConnection;
 
@@ -31,10 +32,10 @@ class Estudiantes{
         $query = "SELECT * FROM estudiantes WHERE cod_est = ?";
         $stmt = $this->dbConnection->getConnection()->prepare($query);
         $stmt->execute([$codEstudiante]);
-        $estudiantesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $estudiantesData;
+        $estudianteData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $estudianteData;
     }
-    
+
     public function updateEstudiante($codEstudiante, $nombreEstudiante)
     {
         $query = "UPDATE estudiantes SET nomb_est = ? WHERE cod_est = ?";
