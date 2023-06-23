@@ -25,14 +25,6 @@ class Inscripciones
         $stmt->execute([$codInscripcion, $periodo, $anho, $codCurso, $codEstudiante]);
     }
 
-    public function getCursos(){
-        return $this->cursosModel->getAllCursos();
-    }
-
-    public function getEstudiantes(){
-        return $this->estudiantesModel->getAllEstudiantes();
-    }
-
     public function getAllInscripciones()
     {
         $query = "SELECT * FROM inscripciones";
@@ -40,7 +32,48 @@ class Inscripciones
         $inscripcionesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $inscripcionesData;
     }
+    
+    
+    public function getInscripcion($busqueda)
+    {
+        $busquedaParam = "%{$busqueda}%";
+        
+        $query = "SELECT * FROM inscripciones 
+                    WHERE CONCAT(UPPER(CAST(cod_inscripcion AS VARCHAR))
+                    , UPPER(CAST(periodo AS VARCHAR)), UPPER(CAST(anho AS VARCHAR))
+                    , UPPER(CAST(cod_cur AS VARCHAR)), UPPER(CAST(cod_est AS VARCHAR))) 
+                    LIKE UPPER(?)";
+        
+        $stmt = $this->dbConnection->getConnection()->prepare($query);
+        $stmt->execute([$busquedaParam]);
+        $inscripcionesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $inscripcionesData;
+    }
+    
 
+
+public function updateInscripcion($periodoNew, $anhoNew, $codCursoNew, $codEstudianteNew, $codInscripcion)
+{
+        $query = "UPDATE inscripciones SET periodo = ?, anho = ?, cod_cur = ?, cod_est = ? WHERE cod_inscripcion = ?";
+        $stmt = $this->dbConnection->getConnection()->prepare($query);
+        $stmt->execute([$periodoNew, $anhoNew, $codCursoNew, $codEstudianteNew, $codInscripcion]);
+    }
+    
+    public function deleteInscripcion($codInscripcion)
+    {
+        $query = "DELETE FROM inscripciones WHERE cod_inscripcion = ?";
+        $stmt = $this->dbConnection->getConnection()->prepare($query);
+        $stmt->execute([$codInscripcion]);
+    }
+
+    public function getCursos(){
+        return $this->cursosModel->getAllCursos();
+    }
+    
+    public function getEstudiantes(){
+        return $this->estudiantesModel->getAllEstudiantes();
+    }
+    
     public function getExistenceEstudiante($codCurso, $codEstudiante)
     {
         $query = "SELECT cod_est FROM inscripciones WHERE cod_cur = ? AND cod_est = ?";
@@ -49,64 +82,5 @@ class Inscripciones
         $codEstudiante = $stmt->fetchColumn();
         return $codEstudiante;
     }
-
-    public function getInsripcion($codInscripcion)
-    {
-        $query = "SELECT * FROM inscripciones WHERE cod_inscripcion = ?";
-        $stmt = $this->dbConnection->getConnection()->prepare($query);
-        $stmt->execute([$codInscripcion]);
-        $inscripcionesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $inscripcionesData;
-    }
-
-    public function getInscripcionesByEstudiante($codEstudiante)
-    {
-        $query = "SELECT * FROM inscripciones WHERE cod_est = ?";
-        $stmt = $this->dbConnection->getConnection()->prepare($query);
-        $stmt->execute([$codEstudiante]);
-        $inscripcionesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $inscripcionesData;
-    }
-
-    public function getInscripcionByCurso($codCurso)
-    {
-        $query = "SELECT * FROM inscripciones WHERE cod_cur = ?";
-        $stmt = $this->dbConnection->getConnection()->prepare($query);
-        $stmt->execute([$codCurso]);
-        $inscripcionesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $inscripcionesData;
-    }
-
-    public function getInscripcionByAnho($anho)
-    {
-        $query = "SELECT * FROM inscripciones WHERE anho = ?";
-        $stmt = $this->dbConnection->getConnection()->prepare($query);
-        $stmt->execute([$anho]);
-        $inscripcionesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $inscripcionesData;
-    }
-
-    public function getInscripcionByPeriodo($perido)
-    {
-        $query = "SELECT * FROM inscripciones WHERE periodo = ?";
-        $stmt = $this->dbConnection->getConnection()->prepare($query);
-        $stmt->execute([$perido]);
-        $inscripcionesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $inscripcionesData;
-    }
-
-    public function updateInscripcion($periodoNew, $anhoNew, $codCursoNew, $codEstudianteNew, $codInscripcion)
-    {
-        $query = "UPDATE inscripciones SET periodo = ?, anho = ?, cod_cur = ?, cod_est = ? WHERE cod_inscripcion = ?";
-        $stmt = $this->dbConnection->getConnection()->prepare($query);
-        $stmt->execute([$periodoNew, $anhoNew, $codCursoNew, $codEstudianteNew, $codInscripcion]);
-    }
-
-    public function deleteInscripcion($codInscripcion)
-    {
-        $query = "DELETE FROM inscripciones WHERE cod_inscripcion = ?";
-        $stmt = $this->dbConnection->getConnection()->prepare($query);
-        $stmt->execute([$codInscripcion]);
-    }
-
+    
 }

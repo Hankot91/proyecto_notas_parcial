@@ -75,3 +75,4 @@ WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'LATIN1');
 \copy cursos FROM '../dates/cursos.csv' WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'latin1');
 
 \copy inscripciones FROM '../dates/inscripciones.csv' WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'latin1');
+

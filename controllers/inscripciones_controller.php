@@ -30,20 +30,13 @@ class InscripcionesController implements Controller
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            if (isset($_GET['cod_est'])) {
-                return $this->inscripcionesModel->getInscripcionesByEstudiante($_GET['cod_est']);
-            } elseif ($_GET['cod_cur']) {
-                return $this->inscripcionesModel->getInscripcionByCurso($_GET['cod_cur']);
-            } elseif ($_GET['anho']) {
-                return $this->inscripcionesModel->getInscripcionByAnho($_GET['anho']);
-            } elseif ($_GET['periodo']) {
-                return $this->inscripcionesModel->getInscripcionByPeriodo($_GET['periodo']);
-            } elseif ($_GET['cod_inscripcion']) {
-                return $this->inscripcionesModel->getInsripcion($_GET['cod_inscripcion']);
+            if (isset($_GET['buscar'])) {
+                    return $this->inscripcionesModel->getInscripcion($_GET['buscar']);
+                } 
             }
-        }
-        return $this->handleReturnAll();
+            return $this->handleReturnAll();
     }
+    
 
     public function handleReturnAll()
     {
@@ -65,7 +58,7 @@ class InscripcionesController implements Controller
         $anho = $_POST['anho'];
         $codCurso = $_POST['cod_cur'];
         $codEstudiante = $_POST['cod_est'];
-        $inscripcionExistente = $this->inscripcionesModel->getInsripcion($codInscripcion);
+        $inscripcionExistente = $this->inscripcionesModel->getInscripcion($codInscripcion);
         $estudianteInscripto = $this->inscripcionesModel->getExistenceEstudiante($codCurso, $codEstudiante); 
         if ($inscripcionExistente) {
             // El código de inscripcion ya existe, mostrar mensaje de error
@@ -107,6 +100,7 @@ class InscripcionesController implements Controller
         $codInscripcion = $_POST['cod_inscripcion'];
         $this->inscripcionesModel->deleteInscripcion($codInscripcion);
     }
+
 }
 
 ?>
