@@ -22,7 +22,7 @@ $getView = isset($_GET['view']) || isset($_GET['cod_inscripcion']) || isset($_GE
         </nav>
     </header>
     <h1>Listado de Inscripciones</h1>
-        <!-- Formulario para agregar un estudiante -->
+        <!-- Formulario para agregar una inscripcion-->
         <form method="POST">
         <input type="number" name="cod_inscripcion" placeholder="Código de inscripcion" required>
         <label for="periodo_select">Seleciona un periodo</label>
@@ -62,6 +62,9 @@ $getView = isset($_GET['view']) || isset($_GET['cod_inscripcion']) || isset($_GE
     <?php else: ?>
         <!-- Mostrar la lista de inscripciones-->
         <a href="../views/inscripciones_view.php">Ocultar</a>
+        <input type="checkbox" name="edit" id="edit_checkbox" <?php if (isset($_GET['edit']))
+                                    echo 'checked'; ?>>
+        <label for="edit_checkbox">Editar</label>
         <table>
             <tr>
                 <th>Código</th>
@@ -92,29 +95,33 @@ $getView = isset($_GET['view']) || isset($_GET['cod_inscripcion']) || isset($_GE
                             <!-- Formulario para editar una inscripcion -->
                             <form method="POST">
                                 <input type="hidden" name="cod_inscripcion" value="<?php echo $inscripcion['cod_inscripcion']; ?>">
-                                <select name="periodo" placeholder="Nuevo periodo" required>
-                                        <option value="<?php echo $inscripcion['periodo']; ?>" selected><?php echo $inscripcion['periodo']; ?></option>
+                                <select name="periodo" placeholder="Nuevo periodo" required class="editable-select" <?php if (!isset($_GET['edit']))
+                                    echo 'disabled'; ?>>
+                                    <option value="<?php echo $inscripcion['periodo']; ?>" selected><?php echo $inscripcion['periodo']; ?></option>
                                     <?php if ($inscripcion['periodo'] == 1): ?>
                                         <option value="2">2</option>
                                     <?php else: ?>
                                         <option value="1">1</option>
                                     <?php endif; ?>
                                 </select>
-                                <select name="anho" class="anho_select">
+                                <select name="anho" class="editable-select anho_select anho_edit" <?php if (!isset($_GET['edit']))
+                                    echo 'disabled'; ?>>
                                     <option value="<?php echo $inscripcion['anho']; ?>">Año</option>
                                 </select>
-                                <select name="cod_cur" id="curso_select">
+                                <select name="cod_cur" id="curso_select" class="editable-select" <?php if (!isset($_GET['edit']))
+                                    echo 'disabled'; ?>>
                                     <?php foreach ($cursosData as $curso): ?>
-                                        <option value="<?php echo $curso['cod_cur']; ?>" <?php if ($inscripcion['cod_cur'] == $curso['cod_cur']) echo 'selected="selected"'; ?>><?php echo $curso['nomb_cur']; ?></option>
+                                        <option value="<?php echo $curso['cod_cur']; ?>" <?php if ($inscripcion['cod_cur'] == $curso['cod_cur'])
+                                            echo 'selected="selected"'; ?>><?php echo $curso['nomb_cur']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
-
-                                <select name="cod_est" id="estudiante_select">
+                                <select name="cod_est" id="estudiante_select" class="editable-select" <?php if (!isset($_GET['edit']))
+                                    echo 'disabled'; ?>>
                                     <?php foreach ($estudiantesData as $estudiante): ?>
-                                        <option value="<?php echo $estudiante['cod_est']; ?>" <?php if ($inscripcion['cod_est'] == $estudiante['cod_est']) echo 'selected="selected"'; ?>><?php echo $estudiante['nomb_est']; ?></option>
+                                        <option value="<?php echo $estudiante['cod_est']; ?>" <?php if ($inscripcion['cod_est'] == $estudiante['cod_est'])
+                                            echo 'selected="selected"'; ?>><?php echo $estudiante['nomb_est']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
-
                                 <input type="submit" name="actualizar" value="Actualizar inscripcion">
                             </form>
                         </td>
