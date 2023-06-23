@@ -36,17 +36,19 @@ class Inscripciones
     
     public function getInscripcion($busqueda)
     {
-        $busquedaParam = "%{$busqueda}%";
         
+        var_dump($busqueda);
         $query = "SELECT * FROM inscripciones 
-                    WHERE CONCAT(UPPER(CAST(cod_inscripcion AS VARCHAR))
-                    , UPPER(CAST(periodo AS VARCHAR)), UPPER(CAST(anho AS VARCHAR))
-                    , UPPER(CAST(cod_cur AS VARCHAR)), UPPER(CAST(cod_est AS VARCHAR))) 
-                    LIKE UPPER(?)";
-        
+                WHERE cod_inscripcion = ? OR
+                        periodo = ? OR
+                        anho = ? OR
+                        cod_cur = ? OR
+                        cod_est = ?";
+    
         $stmt = $this->dbConnection->getConnection()->prepare($query);
-        $stmt->execute([$busquedaParam]);
+        $stmt->execute([$busqueda, $busqueda, $busqueda, $busqueda, $busqueda]);
         $inscripcionesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        var_dump($inscripcionesData);
         return $inscripcionesData;
     }
     
@@ -82,5 +84,5 @@ public function updateInscripcion($periodoNew, $anhoNew, $codCursoNew, $codEstud
         $codEstudiante = $stmt->fetchColumn();
         return $codEstudiante;
     }
-    
+
 }

@@ -31,7 +31,7 @@ $getView = isset($_GET['view']) || isset($_GET['cod_inscripcion']) || isset($_GE
             <option value="2">2</option>
         </select>
         <label for="anho_select">Selecciona un año:</label>
-        <select name="anho" id="anho_select"></select>
+        <select name="anho" class="anho_select"></select>
         <select name="cod_cur" id="curso_select">
             <?php foreach ($cursosData as $curso): ?>
             <option value="<?php echo $curso['cod_cur']; ?>"><?php echo $curso['nomb_cur']; ?></option>
@@ -51,11 +51,12 @@ $getView = isset($_GET['view']) || isset($_GET['cod_inscripcion']) || isset($_GE
         <input type="number" name="buscar" placeholder="Dato" required>
         <input type="submit" name="buscar_submit" value="Buscar">
     </form>
-
+    <?php if(isset($_GET['buscar_submit']))?>
+                <?php ?>
     <br>
-    <a href="/views/inscripciones_view.php?view=true">Ver todos</a>
+    <a href="/views/inscripciones_view.php?view=true" name="verTodos">Ver todos</a>
     <br>
-
+    
     <?php if ($getView === false): ?>
         <?php require_once "footer.php"; ?>
     <?php else: ?>
@@ -69,7 +70,7 @@ $getView = isset($_GET['view']) || isset($_GET['cod_inscripcion']) || isset($_GE
                 <th>Estudiante</th>
                 <th>Curso</th>
             </tr>
-            <?php if (!empty($estudiantesData)): ?>
+            <?php if (!empty($inscripcionesData)): ?>
                 <?php foreach ($inscripcionesData as $inscripcion): ?>
                     <tr>
                         <td>
@@ -87,11 +88,48 @@ $getView = isset($_GET['view']) || isset($_GET['cod_inscripcion']) || isset($_GE
                         <td>
                             <a href="?cod_cur= <?= $inscripcion['cod_cur']; ?>"><?= $inscripcion['cod_cur']; ?></a>
                         </td>
+                        <td>
+                            <!-- Formulario para editar una inscripcion -->
+                            <form method="POST">
+                                <input type="hidden" name="cod_inscripcion" value="<?php echo $inscripcion['cod_inscripcion']; ?>">
+                                <select name="periodo" placeholder="Nuevo periodo" required>
+                                        <option value="<?php echo $inscripcion['periodo']; ?>" selected><?php echo $inscripcion['periodo']; ?></option>
+                                    <?php if ($inscripcion['periodo'] == 1): ?>
+                                        <option value="2">2</option>
+                                    <?php else: ?>
+                                        <option value="1">1</option>
+                                    <?php endif; ?>
+                                </select>
+                                <select name="anho" class="anho_select">
+                                    <option value="<?php echo $inscripcion['anho']; ?>">Año</option>
+                                </select>
+                                <select name="cod_cur" id="curso_select">
+                                    <?php foreach ($cursosData as $curso): ?>
+                                        <option value="<?php echo $curso['cod_cur']; ?>" <?php if ($inscripcion['cod_cur'] == $curso['cod_cur']) echo 'selected="selected"'; ?>><?php echo $curso['nomb_cur']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+
+                                <select name="cod_est" id="estudiante_select">
+                                    <?php foreach ($estudiantesData as $estudiante): ?>
+                                        <option value="<?php echo $estudiante['cod_est']; ?>" <?php if ($inscripcion['cod_est'] == $estudiante['cod_est']) echo 'selected="selected"'; ?>><?php echo $estudiante['nomb_est']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+
+                                <input type="submit" name="actualizar" value="Actualizar inscripcion">
+                            </form>
+                        </td>
+                        <td>
+                            <!-- Formulario para eliminar una inscripcion -->
+                            <form method="POST">
+                                <input type="hidden" name="cod_inscripcion" value="<?php echo $inscripcion['cod_inscripcion']; ?>">
+                                <input type="submit" name="eliminar" value="Eliminar">
+                            </form>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="5">No hay estudiantes registrados.</td>
+                    <td colspan="5">No hay inscripciones registradas.</td>
                 </tr>
             <?php endif; ?>
         </table>

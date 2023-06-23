@@ -64,7 +64,7 @@ $getView = isset($_GET['view']) || isset($_GET['cod_est']);
                             <form method="POST">
                                 <input type="hidden" name="cod_est" value="<?php echo $estudiante['cod_est']; ?>">
                                 <input type="text" name="nomb_est" placeholder="Nuevo nombre" required>
-                                <input type="submit" name="actualizar" value="Actualizar estudiante">
+                                <input type="submit" name="actualizar" value="Actualizar estudiante" action=" ">
                             </form>
                         </td>
                         <td>

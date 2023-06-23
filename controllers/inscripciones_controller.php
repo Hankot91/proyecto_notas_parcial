@@ -30,10 +30,10 @@ class InscripcionesController implements Controller
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            if (isset($_GET['buscar'])) {
-                    return $this->inscripcionesModel->getInscripcion($_GET['buscar']);
-                } 
+            if (isset($_GET['buscar_submit'])) {
+                return $this->inscripcionesModel->getInscripcion($_GET['buscar']);
             }
+        }
             return $this->handleReturnAll();
     }
     
@@ -90,7 +90,7 @@ class InscripcionesController implements Controller
         $codInscripcion = $_POST['cod_inscripcion'];
         $periodoNew = $_POST['periodo'];
         $anhoNew = $_POST['anho'];
-        $codCursoNew = $_POST['cod_curso'];
+        $codCursoNew = $_POST['cod_cur'];
         $codEstudianteNew = $_POST['cod_est'];
         $this->inscripcionesModel->updateInscripcion($periodoNew, $anhoNew, $codCursoNew, $codEstudianteNew, $codInscripcion);
     }
