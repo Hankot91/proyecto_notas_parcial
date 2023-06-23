@@ -84,6 +84,7 @@ class NotasController implements Controller
         $this->notasModel->deleteNota($nota);
     }
 
-
-
 }
+
+
+?>
