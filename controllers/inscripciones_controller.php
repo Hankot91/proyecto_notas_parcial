@@ -92,7 +92,20 @@ class InscripcionesController implements Controller
         $anhoNew = $_POST['anho'];
         $codCursoNew = $_POST['cod_cur'];
         $codEstudianteNew = $_POST['cod_est'];
-        $this->inscripcionesModel->updateInscripcion($periodoNew, $anhoNew, $codCursoNew, $codEstudianteNew, $codInscripcion);
+        $estudianteInscripto = $this->inscripcionesModel->getExistenceEstudiante($codCursoNew, $codEstudianteNew); 
+        if ($estudianteInscripto){
+             // El código de estudiante ya esta inscrito en ese curso, mostrar mensaje de error
+            echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                        let parrafo = document.querySelector('.mensaje_error');
+                        if (parrafo) {
+                        parrafo.textContent = 'El estudiante ya esta inscrito en este curso';
+                    }
+                });
+            </script>";
+        }else{
+            $this->inscripcionesModel->updateInscripcion($periodoNew, $anhoNew, $codCursoNew, $codEstudianteNew, $codInscripcion);
+        }
     }
 
     public function handleDelete()
