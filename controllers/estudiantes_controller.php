@@ -28,8 +28,8 @@ class EstudiantesController implements Controller
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            if (isset($_GET['cod_est'])) {
-                return $this->estudiantesModel->getEstudiante($_GET['cod_est']);
+            if (isset($_GET['buscar'])) {
+                return $this->estudiantesModel->getEstudiante($_GET['buscar']);
             }
         }
         return $this->handleReturnAll();

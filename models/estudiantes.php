@@ -27,14 +27,17 @@ class Estudiantes
         return $estudiantesData;
     }
 
-    public function getEstudiante($codEstudiante)
+    public function getEstudiante($busqueda)
     {
-        $query = "SELECT * FROM estudiantes WHERE cod_est = ?";
+        $query = "SELECT * FROM estudiantes WHERE CAST(cod_est AS TEXT) = ? OR nomb_est ILIKE ?";
         $stmt = $this->dbConnection->getConnection()->prepare($query);
-        $stmt->execute([$codEstudiante]);
+        $searchValue = '%' . $busqueda . '%';
+        $stmt->execute([$busqueda, $searchValue]);
         $estudianteData = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $estudianteData;
     }
+    
+
 
     public function updateEstudiante($codEstudiante, $nombreEstudiante)
     {

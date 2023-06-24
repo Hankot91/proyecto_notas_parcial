@@ -27,8 +27,8 @@ class cursosController implements Controller
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            if (isset($_GET['cod_cur'])) {
-                return $this->cursosModel->getCurso($_GET['cod_cur']);
+            if (isset($_GET['buscar'])) {
+                return $this->cursosModel->getCurso($_GET['buscar']);
             }
         }
         return $this->handleReturnAll();

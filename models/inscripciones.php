@@ -36,7 +36,6 @@ class Inscripciones
     
     public function getInscripcion($busqueda)
     {
-        
         $query = "SELECT * FROM inscripciones 
                 WHERE cod_inscripcion = ? OR
                         periodo = ? OR

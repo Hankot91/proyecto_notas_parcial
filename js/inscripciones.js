@@ -18,7 +18,7 @@ let  editableSelects = document.querySelectorAll('form .editable-select');
 let anhoSelect = document.querySelector('form .anho_edit');
 
 function toggleInputs() {
-    var disabled = !editCheckbox.checked;
+    let disabled = !editCheckbox.checked;
     for (var i = 0; i < editableSelects.length; i++) {
         editableSelects[i].disabled = disabled;
     }

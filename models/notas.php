@@ -58,7 +58,8 @@ class Notas{
         $stmt->execute([$nota]);
     }
 
-    public function getCursos(){
+    public function getCursos()
+    {
         return $this->cursosModel->getAllCursos();
     }
 

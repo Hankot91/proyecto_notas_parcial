@@ -27,13 +27,14 @@ class Cursos
         return $curosData;
     }
 
-    public function getCurso($codCurso)
+    public function getCurso($busqueda)
     {
-        $query = "SELECT * FROM cursos WHERE cod_cur = ?";
+        $query = "SELECT * FROM cursos WHERE CAST(cod_cur AS TEXT) = ? OR nomb_cur ILIKE ?";
         $stmt = $this->dbConnection->getConnection()->prepare($query);
-        $stmt->execute([$codCurso]);
-        $cursoData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $cursoData;
+        $searchValue = '%' . $busqueda . '%';
+        $stmt->execute([$busqueda, $searchValue]);
+        $estudianteData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $estudianteData;
     }
 
     public function updateCurso($codCurso, $nombreCurso)
