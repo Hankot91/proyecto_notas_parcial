@@ -61,7 +61,7 @@ class Notas{
     public function getCursos(){
         return $this->cursosModel->getAllCursos();
     }
-    
+
 }
 
 

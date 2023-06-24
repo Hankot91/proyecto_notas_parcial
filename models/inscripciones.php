@@ -37,7 +37,6 @@ class Inscripciones
     public function getInscripcion($busqueda)
     {
         
-        var_dump($busqueda);
         $query = "SELECT * FROM inscripciones 
                 WHERE cod_inscripcion = ? OR
                         periodo = ? OR
@@ -48,7 +47,6 @@ class Inscripciones
         $stmt = $this->dbConnection->getConnection()->prepare($query);
         $stmt->execute([$busqueda, $busqueda, $busqueda, $busqueda, $busqueda]);
         $inscripcionesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        var_dump($inscripcionesData);
         return $inscripcionesData;
     }
     

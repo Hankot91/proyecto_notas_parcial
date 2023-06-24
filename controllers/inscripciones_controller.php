@@ -30,7 +30,7 @@ class InscripcionesController implements Controller
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            if (isset($_GET['buscar_submit'])) {
+            if (isset($_GET['buscar'])) {
                 return $this->inscripcionesModel->getInscripcion($_GET['buscar']);
             }
         }
