@@ -50,11 +50,13 @@ $getRegister = isset($_GET['register']);
     <?php else: ?>
         <?php if (!empty($cursosData)): ?>
             <?php if ($getShow === true): ?>
+                <!--Llamado del template para las acciones de cursos -->
                 <br>
                 <a href="../views/cursos_view.php">Regresar</a>
                 <br>
                 <?php require_once "templates/cursos/acciones_cursos.php" ?>
             <?php else: ?>
+                <!--Llamado del template para listar los cursos -->
                 <br>
                 <a href="../views/cursos_view.php">Ocultar</a>
                 <br>
