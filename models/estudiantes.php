@@ -37,8 +37,6 @@ class Estudiantes
         return $estudianteData;
     }
     
-
-
     public function updateEstudiante($codEstudiante, $nombreEstudiante)
     {
         $query = "UPDATE estudiantes SET nomb_est = ? WHERE cod_est = ?";

@@ -36,21 +36,10 @@ class InscripcionesController implements Controller
         }
             return $this->handleReturnAll();
     }
-    
 
     public function handleReturnAll()
     {
         return $this->inscripcionesModel->getAllInscripciones();
-    }
-
-    public function handleReturnCursos()
-    {
-        return $this->inscripcionesModel->getCursos();
-    }
-
-    public function handleReturnEstudiantes()
-    {
-        return $this->inscripcionesModel->getEstudiantes();
     }
 
     public function handleCreate()
@@ -97,6 +86,16 @@ class InscripcionesController implements Controller
     {
         $codInscripcion = $_POST['cod_inscripcion'];
         $this->inscripcionesModel->deleteInscripcion($codInscripcion);
+    }
+
+    public function handleReturnCursos()
+    {
+        return $this->inscripcionesModel->getCursos();
+    }
+
+    public function handleReturnEstudiantes()
+    {
+        return $this->inscripcionesModel->getEstudiantes();
     }
 
 }

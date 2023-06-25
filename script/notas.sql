@@ -28,7 +28,7 @@ CREATE TABLE notas(
 
 CREATE TABLE calificaciones(
     cod_cal  INTEGER CHECK (cod_cal >= 0) PRIMARY KEY NOT NULL,
-    valor INTEGER CHECK(valor >= 0 AND valor <= 5),
+    valor FLOAT CHECK(valor >= 0 AND valor <= 5),
     fecha DATE CHECK(fecha <= CURRENT_DATE),
     cod_inscripcion INTEGER,
     nota VARCHAR(30)
@@ -83,9 +83,6 @@ CREATE TRIGGER validar_porcentaje_trigger
     FOR EACH ROW
     WHEN (NEW.cod_cur IS NOT NULL) 
     EXECUTE FUNCTION validar_porcentaje();
-DELETE FROM notas;
-SELECT *FROM notas;
-DROP TRIGGER validar_porcentaje_trigger ON notas;
 
 --copiando los datos de los csv
 COPY estudiantes FROM '../dates/estudiantes.csv' 

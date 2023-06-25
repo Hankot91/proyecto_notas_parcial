@@ -41,10 +41,6 @@ class NotasController implements Controller
         return $this->notasModel->getAllNotas();
     }
 
-    public function handleReturnCursos(){
-        return $this->notasModel->getCursos();
-    }
-
     public function handleCreate()
     {
         $nota = $_POST['nota'];
@@ -103,6 +99,10 @@ class NotasController implements Controller
         $this->notasModel->deleteNota($nota);
     }
 
+    public function handleReturnCursos()
+    {
+        return $this->notasModel->getCursos();
+    }
 }
 
 
