@@ -59,10 +59,13 @@ $getRegister = isset($_GET['register']);
                     <br>
                     <a href="../views/notas_view.php">Ocultar</a>
                     <br>
-                    <?php require_once "templates/notass/lista_notas.php" ?>
+                    <?php require_once "templates/notas/lista_notas.php" ?>
                 <?php endif; ?>
             <?php else: ?>
                 <tr>
+                    <br>
+                    <a href="../views/notas_view.php">Regresar</a>
+                    <br>
                     <td colspan="5">No hay registros.</td>
                 </tr>
 

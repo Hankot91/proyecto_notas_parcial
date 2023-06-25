@@ -31,18 +31,19 @@ class Notas{
     public function getNota($busqueda)
     {
         $query = "SELECT * FROM notas
-        WHERE nota ILIKE ? OR
-                descrip_nota ILIKE ? OR
-                CAST(porcentaje AS TEXT) = ? OR
-                CAST(posicion AS TEXT) = ? OR
-                CAST(cod_cur AS TEXT) = ?";
-
+        WHERE nota LIKE ? OR
+                descrip_nota LIKE ? OR
+                CAST(porcentaje AS TEXT) LIKE ? OR
+                CAST(posicion AS TEXT) LIKE ? OR
+                CAST(cod_cur AS TEXT) LIKE ?";
+    
         $stmt = $this->dbConnection->getConnection()->prepare($query);
-        $stmt->execute([$busqueda, $busqueda, $busqueda, $busqueda, $busqueda]);
+        $searchValue = "%{$busqueda}%"; 
+        $stmt->execute([$searchValue, $searchValue, $searchValue, $searchValue, $searchValue]);
         $notasData = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $notasData;
     }
-
+    
     public function updateNota($nota, $descripcionNota, $porcentaje, $posicion, $codCurso)
     {
         $query = "UPDATE notas SET descrip_nota = ?, porcentaje = ?, posicion = ?, cod_cur = ? WHERE nota = ?";

@@ -1,5 +1,5 @@
 <!-- Formulario para agregar una nota a un curso-->
-<a href="inscripciones_view.php">Regresar</a>
+<a href="notas_view.php">Regresar</a>
 <h3><label for="form_agragar"> Formulario de inscripcion</label></h3>
 <form method="POST" action="/views/notas_view.php?view=true">
     <input type="text" name="nota" placeholder="Nota" required>
