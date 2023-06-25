@@ -23,8 +23,8 @@ class Cursos
     {
         $query = "SELECT * FROM cursos";
         $stmt = $this->dbConnection->getConnection()->query($query);
-        $curosData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $curosData;
+        $cursosData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $cursosData;
     }
 
     public function getCurso($busqueda)
