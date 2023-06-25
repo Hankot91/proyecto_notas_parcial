@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../connection/connection.php';
 require_once __DIR__ . '/../models/estudiantes.php';
-require_once "../controllers/controller.php";
+require_once "controller.php";
 
 class EstudiantesController implements Controller
 {
