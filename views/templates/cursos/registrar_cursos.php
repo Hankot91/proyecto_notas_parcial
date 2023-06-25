@@ -6,4 +6,3 @@
     <input type="text" name="nomb_cur" placeholder="Nombre del curso" required>
     <input type="submit" name="agregar" value="Agregar curso">
 </form>
-<p class="mensaje_error"></p>

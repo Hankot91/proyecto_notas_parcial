@@ -58,18 +58,18 @@ REFERENCES inscripciones(cod_inscripcion)
 ON DELETE CASCADE ON UPDATE CASCADE;
 
 --disparador de la tabla notas 
--- Crear una función que se ejecutará antes de insertar o actualizar en la tabla notas
+-- función validar_porcentaje para verificar la suma de porcentajes
 CREATE OR REPLACE FUNCTION validar_porcentaje()
     RETURNS TRIGGER AS $$
 BEGIN
-    -- Obtener la suma de los porcentajes para el curso en la nueva fila o la fila actualizada
-    SELECT SUM(porcentaje)
-    INTO STRICT NEW.suma_porcentajes
-    FROM notas
-    WHERE cod_cur = NEW.cod_cur;
-    
-    -- Verificar si la suma de porcentajes excede el 100%
-    IF NEW.suma_porcentajes > 100 THEN
+    -- Verificar si la suma de porcentajes para el curso supera el 100%
+    IF EXISTS (
+        SELECT 1
+        FROM notas
+        WHERE cod_cur = NEW.cod_cur
+        GROUP BY cod_cur
+        HAVING SUM(porcentaje) > 100
+    ) THEN
         RAISE EXCEPTION 'La suma de porcentajes para el curso supera el 100%%';
     END IF;
     
@@ -77,11 +77,15 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Crear el disparador que llamará a la función antes de insertar o actualizar en la tabla notas
+-- disparador validar_porcentaje
 CREATE TRIGGER validar_porcentaje_trigger
-    BEFORE INSERT OR UPDATE ON notas
+    AFTER INSERT OR UPDATE ON notas
     FOR EACH ROW
+    WHEN (NEW.cod_cur IS NOT NULL) 
     EXECUTE FUNCTION validar_porcentaje();
+DELETE FROM notas;
+SELECT *FROM notas;
+DROP TRIGGER validar_porcentaje_trigger ON notas;
 
 --copiando los datos de los csv
 COPY estudiantes FROM '../dates/estudiantes.csv' 

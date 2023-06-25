@@ -66,20 +66,14 @@ class InscripcionesController implements Controller
             // El código de inscripcion ya existe, mostrar mensaje de error
             echo "<script>
                                 document.addEventListener('DOMContentLoaded', function() {
-                                            let parrafo = document.querySelector('.mensaje_error');
-                                            if (parrafo) {
-                                            parrafo.textContent = 'El código de inscripcion ya existe. Por favor, elige otro código.';
-                                        }
+                                    window.alert('El código de inscripcion ya existe. Por favor, elige otro código.')
                                 });
                             </script>";
         } elseif($estudianteInscripto){
                 // El código de estudiante ya esta inscrito en ese curso, mostrar mensaje de error
                 echo "<script>
                 document.addEventListener('DOMContentLoaded', function() {
-                            let parrafo = document.querySelector('.mensaje_error');
-                            if (parrafo) {
-                            parrafo.textContent = 'El estudiante ya esta inscrito en este curso';
-                        }
+                    window.alert('El estudiante ya esta inscrito en ese curso.')
                 });
             </script>";
         } else {

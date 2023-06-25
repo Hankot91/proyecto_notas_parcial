@@ -56,7 +56,7 @@ $getRegister = isset($_GET['register']);
                 <?php if ($getShow === true): ?>
                     <!--Llamado del template para las acciones de inscripciones -->
                     <br>
-                    <a href="../views/cursos_view.php">Regresar</a>
+                    <a href="../views/inscripciones_view.php">Regresar</a>
                     <br>
                     <?php require_once "templates/inscripciones/acciones_inscripciones.php" ?>
                 <?php else: ?>
@@ -68,7 +68,7 @@ $getRegister = isset($_GET['register']);
                 <?php endif; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="5">No hay inscripciones registradas.</td>
+                    <td colspan="5">No hay registros.</td>
                 </tr>
 
             <?php endif; ?>

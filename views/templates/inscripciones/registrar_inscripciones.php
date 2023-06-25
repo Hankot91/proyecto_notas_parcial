@@ -26,4 +26,3 @@
 
     <input type="submit" name="agregar" value="Agregar inscripcion">
 </form>
-<h4 class="mensaje_error"></h4>

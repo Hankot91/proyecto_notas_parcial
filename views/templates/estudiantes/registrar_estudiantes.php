@@ -8,4 +8,3 @@
     <input type="submit" name="agregar" value="Agregar estudiante">
 </form>
 
-<h4 class="mensaje_error"></h4>

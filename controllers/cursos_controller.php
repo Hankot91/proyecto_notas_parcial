@@ -47,10 +47,7 @@ class cursosController implements Controller
         if ($cursoExistente) {
             echo "<script>
                                 document.addEventListener('DOMContentLoaded', function() {
-                                            let parrafo = document.querySelector('.mensaje_error');
-                                            if (parrafo) {
-                                            parrafo.textContent = 'El código de curso ya existe. Por favor, elige otro código.';
-                                        }
+                                    window.alert('El código de cursos ya existe. Por favor, elige otro código')
                                 });
                             </script>";
         } else {

@@ -6,7 +6,7 @@ require_once "cursos.php";
 class Notas{
 
     private $dbConnection;
-    private $cursosModel; 
+    private $cursosModel;  
     public function __construct(DatabaseConnection $dbConnection)
     {
         $this->dbConnection = $dbConnection;
@@ -31,16 +31,15 @@ class Notas{
     public function getNota($busqueda)
     {
         $query = "SELECT * FROM notas
-        WHERE nota = ? OR
-                descrip_nota = ? OR
-                porcentaje = ? OR
-                posicion = ? OR
-                cod_cur = ?";
+        WHERE nota ILIKE ? OR
+                descrip_nota ILIKE ? OR
+                CAST(porcentaje AS TEXT) = ? OR
+                CAST(posicion AS TEXT) = ? OR
+                CAST(cod_cur AS TEXT) = ?";
 
         $stmt = $this->dbConnection->getConnection()->prepare($query);
         $stmt->execute([$busqueda, $busqueda, $busqueda, $busqueda, $busqueda]);
         $notasData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        var_dump($notasData);
         return $notasData;
     }
 

@@ -29,7 +29,7 @@ class NotasController implements Controller
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            if (isset($_GET['buscar_submit'])) {
+            if (isset($_GET['buscar'])) {
                 return $this->notasModel->getNota($_GET['buscar']);
             }
         }
@@ -53,18 +53,29 @@ class NotasController implements Controller
         $posicion = $_POST['posicion'];
         $codCurso = $_POST['cod_cur'];
         $notaExistente = $this->notasModel->getNota($nota);
-        if ($notaExistente) {
+        if ($porcentaje > 100){
+            echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                window.alert('El porcentaje no puede superar el 100%');
+            });
+        </script>";
+        }elseif ($notaExistente) {
             // El código de nota ya existe, mostrar mensaje de error
             echo "<script>
                                 document.addEventListener('DOMContentLoaded', function() {
-                                            let parrafo = document.querySelector('.mensaje_error');
-                                            if (parrafo) {
-                                            parrafo.textContent = 'El código de nota ya existe. Por favor, elige otro código.';
-                                        }
+                                    window.alert('El código de notas ya existe. Por favor, elige otro código.');
                                 });
                             </script>";
         } else {
-            $this->notasModel->createNota($nota, $descripcionNota, $porcentaje, $posicion, $codCurso);
+            try {
+                $this->notasModel->createNota($nota, $descripcionNota, $porcentaje, $posicion, $codCurso);
+            } catch (PDOException $e) {
+                echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    window.alert('Error: La suma de porcentajes para el curso supera el 100%.');
+                });
+            </script>";
+            }
         }
     }
 
@@ -75,7 +86,15 @@ class NotasController implements Controller
         $porcentaje = $_POST['porcentaje'];
         $posicion = $_POST['posicion'];
         $codCurso = $_POST['cod_cur'];
-        $this->notasModel->updateNota($nota, $descripcionNota, $porcentaje, $posicion, $codCurso);
+        try {
+            $this->notasModel->updateNota($nota, $descripcionNota, $porcentaje, $posicion, $codCurso);     
+        } catch (PDOException $e) {
+            echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                window.alert('Error: La suma de porcentajes para el curso no debe superar el 100%.');
+            });
+        </script>";
+        }
     }
 
     public function handleDelete()

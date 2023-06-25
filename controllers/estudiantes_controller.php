@@ -50,10 +50,7 @@ class EstudiantesController implements Controller
             // El código de estudiante ya existe, mostrar mensaje de error
             echo "<script>
                             document.addEventListener('DOMContentLoaded', function() {
-                                        let parrafo = document.querySelector('.mensaje_error');
-                                        if (parrafo) {
-                                        parrafo.textContent = 'El código de estudiante ya existe. Por favor, elige otro código.';
-                                    }
+                                window.alert('El código de estudiante ya existe. Por favor, elige otro código')
                             });
                         </script>";
         } else {
