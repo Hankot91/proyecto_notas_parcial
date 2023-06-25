@@ -15,7 +15,7 @@ $getRegister = isset($_GET['register']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <title>Inscripciones</title>
 </head>
 
@@ -76,7 +76,7 @@ $getRegister = isset($_GET['register']);
 
     <?php endif; ?>
 
-    <script src="../js/inscripciones.js"></script>
+    <script src="js/inscripciones.js"></script>
 </body>
 
 </html>

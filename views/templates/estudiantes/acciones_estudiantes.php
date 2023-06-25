@@ -13,7 +13,7 @@
                     <input type="hidden" name="cod_est" value="<?php echo $estudiante['cod_est']; ?>">
                     <input type="text" name="nomb_est" placeholder="Nuevo nombre" required
                         value="<?php echo $estudiante['nomb_est']; ?>" class="editable-input">
-                    <input type="submit" name="actualizar" value="Actualizar estudiante" action=" ">
+                    <input type="submit" name="actualizar" value="Actualizar estudiante">
                 </form>
             </td>
             <td>

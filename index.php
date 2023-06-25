@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="views/css/style.css">
+    <title>SIAU 2.0</title>
 </head>
 <body>
     <header>
