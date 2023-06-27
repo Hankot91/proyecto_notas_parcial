@@ -1,24 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="views/css/style.css">
-    <title>SIAU 2.0</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="views/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="views/css/stylesIndex.css">
+
+  <title>SIAU 2.0</title>
 </head>
+
 <body>
-    <header>
-    <nav>
-            <a href="#">Inicio</a>
-        </nav>
+  <header>
+  <div class="panel">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.php?">Menu</a>
+    <?php require_once "views/header.php"; ?>
+  </header>
 
-    </header>
-    <a href="/views/estudiantes_view.php">Estudiantes</a>
-    <a href="/views/cursos_view.php">Cursos</a>
-    <a href="/views/inscripciones_view.php">Inscripciones</a>
-    <a href="/views/notas_view.php">Notas</a>
-    <a href="/views/calificaciones_view.php">Calificaciones</a>
 
-    
+  <main class="container mt-4 ">
+    <div class="d-flex justify-content-center" style="margin-top: 40vh;">
+      <div class="d-flex">
+        <a href="/views/estudiantes_view.php" class="btn btn-primary me-3 ms-md-auto">Estudiantes <i
+            class="fa-solid fa-eye" style="color: #ffffff;"></i></a>
+      </div>
+      <div class="d-flex">
+        <a href="/views/cursos_view.php" class="btn btn-primary me-3 ms-md-auto">Cursos <i
+            class="fa-solid fa-book"></i></a>
+      </div>
+      <div class="d-flex">
+        <a href="/views/inscripciones_view.php" class="btn btn-primary me-3 ms-md-auto">Inscripciones <i
+            class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i></a>
+      </div>
+      <div class="d-flex">
+        <a href="views/estudiantes_view.php?register=true" class="btn btn-primary me-3 ms-md-auto">Crear estudiante <i
+            class="fa-solid fa-circle-plus"></i></a>
+      </div>
+      <div class="d-flex">
+        <a href="views/cursos_view.php?register=true" class="btn btn-primary me-3 ms-md-auto">Agregar curso <i
+            class="fa-solid fa-bookmark fa-lg" style="color: #ffffff;"></i></a>
+      </div>
+    </div>
+  </main>
+  <script src="views/js/bootstrap/popper.min.js"></script>
+  <script src="views/js/bootstrap/bootstrap.min.js"></script>
+
 </body>
+
 </html>

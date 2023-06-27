@@ -1,0 +1,175 @@
+body{
+    background-image: url("../imgs/bg-card.jpg");
+}
+.navbar{
+    background-color: #fffdfdf8;
+}
+.navbar a {
+    color: #000000;
+    font-weight: bold;
+    font-family:cursive;
+}
+.header h1 {
+    color: #ff0000;
+    font-weight: bold;
+    font-family:cursive;
+}
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(24, 24, 24, 0.527); 
+    z-index: -1;
+  }
+  
+.offClick{
+    margin-top: 15vh;
+}
+
+.center-hide{
+    margin-left: 37vw;
+}
+
+.container-register{
+    height: 100vh;
+    margin-top:-7%;
+}
+
+.card-register{
+    width: 60%; 
+    max-width: 350px;
+    height: 65%; 
+    max-height: 550px; 
+    position: relative;
+    box-shadow: -2px 5px 15px 0px #429afff5;
+}
+.card-header{
+    background-color: #fdce3170;
+    border-color: black;
+    border-width: 2px;
+}
+
+.txt-header{
+    font-weight: bold;
+
+}
+
+.card-body {
+    background-image: url("../imgs/bg-card-body-2.jpg");
+    position: relative; /* Añade posición relativa al .card-body para que el pseudo-elemento ::before se posicione correctamente */
+}
+
+.card-register .card-body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.966);
+    z-index: -1;
+}
+
+.txt{
+    color: rgb(0, 0, 0);
+    margin-top: 12%;
+    font-weight: bold;
+    width: 25%;
+}
+
+.txt-control::placeholder{
+    color: rgb(48, 47, 47);
+    font-weight: bold;
+}
+
+.container-register {
+    position: relative;
+}
+
+#floatingBox {
+    position: absolute;
+    top: 47%;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 199, 162, 0.938);
+    border: 2px solid #1b8600;
+    border-radius: 4%;
+    border-style: solid;
+    padding: 25px;
+    box-shadow: 0 0 10px rgba(255, 81, 81, 0.2);
+    z-index: 1;
+}
+
+#closeButton {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#closeButton:hover {
+    background-color: #000000;
+    color: #ff2525;
+    box-shadow: 0 0 5px 1.5px rgba(200, 0, 0, 0.5);
+}
+
+#closeButton {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#closeButton:hover {
+    background-color: #000000;
+    color: #ff2525;
+    box-shadow: 0 0 5px 1.5px rgba(200, 0, 0, 0.5);
+}
+#floatingBox p {
+    color: black;
+    margin: 0%;
+    font-weight:900;
+}
+
+.text-edit-h1{
+    color: #f3f334d5;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.text-edit{
+    font-size:larger;
+    font-weight: bold;
+    color: wheat;
+}
+
+  
+.dropdown-menu{
+    margin-top:-2.130vh;
+    width:34vw;
+    background-color:#fff;
+    border-radius: 0%;
+  }
+  .dropdown-menu a:hover {
+    background-color:#6d91f56b;
+    font-weight: 500;
+  }

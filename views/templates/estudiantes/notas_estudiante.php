@@ -1,5 +1,5 @@
-<h4>Notas del Estudiante</h4>
-    <table>
+<h4 class="text-custom-color text-center">Notas del Estudiante</h4>
+    <table  class="table table-borderless table-striped table-success table-sm table-hover">
         <tr>
             <th>Curso</th>
             <?php $maxNotas = 0; ?>
@@ -12,7 +12,6 @@
             <?php for ($i = 1; $i <= $maxNotas; $i++): ?>
                 <th>Nota <?php echo $i; ?></th>
             <?php endfor; ?>
-            <th colspan="<?php echo $maxNotas - $numNotas; ?>"></th>
             <th>Total</th>
         </tr>
         <?php foreach ($notasData as $notas): ?>

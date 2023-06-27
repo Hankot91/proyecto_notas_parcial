@@ -1,3 +1,4 @@
+
 let editCheckbox = document.getElementById('edit_checkbox');
 let nameInput = document.querySelector('form .editable-input');
 let inputSubmit = document.querySelector('form .input-submit');

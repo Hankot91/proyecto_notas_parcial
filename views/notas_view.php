@@ -13,26 +13,35 @@ $getRegister = isset($_GET['register']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/stylesIndex.css">
     <title>Notas</title>
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="../index.php">Inicio</a>
-        </nav>
+<header>
+    <div class="panel">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../index.php?">Menu</a>
+        <?php require_once "header.php"; ?>
     </header>
-    <h1>NOTAS</h1>
     <!--Busqueda de notas -->
-    <form method="GET">
-        <input type="text" name="buscar" placeholder="Dato" required>
-        <input type="submit" name="buscar_submit" value="Buscar">
-    </form>
+    <div class="row justify-content-center offClick">
+        <form method="GET" class="row_form">
+            <input type="text" name="buscar" class="form-control-lg input_search" placeholder="Dato" required>
+            <button  class="btn btn-primary ms-2">Buscar <i class="fa-solid fa-eye" style="color: #ffffff;"></i></button>
+        </form>
+    </div>
+    <br>
     <br>
 
     <?php if ($getRegister === true): ?>
         <?php require_once "templates/notas/registrar_notas.php"; ?>
     <?php else: ?>
+        <div class="container_form">
+            <h3 class="text-info fw-bold">NOTAS</h3>
+            <br>
         <form method="GET">
             <input type="hidden" name="register" value="true">
             <input type="submit" value="Registro nuevo">
@@ -74,5 +83,4 @@ $getRegister = isset($_GET['register']);
 
     <?php endif; ?>
     <script src="js/notas.js"></script>
-</body>
-</html>
+    <?php require_once "footer.php"?>
