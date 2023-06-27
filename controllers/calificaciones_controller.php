@@ -14,26 +14,29 @@ class CalificacionesController implements Controller{
         $this->dbConnection = DatabaseConnection::getInstance();
         $this->calificacionesModel = new Calificaciones($this->dbConnection);
     }
-    
-    public function handleRequest()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_POST['agregar'])) {
-                $this->handleCreate();
-            } elseif (isset($_POST['actualizar'])) {
-                $this->handleUpdate();
-            } elseif (isset($_POST['eliminar'])) {
-                $this->handleDelete();
-            }
-        }
 
-        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            if (isset($_GET['buscar'])) {
-                return $this->calificacionesModel->getCalificacion($_GET['buscar']);
-            }
+    public function handleRequest()
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['agregar'])) {
+            $this->handleCreate();
+        } elseif (isset($_POST['actualizar'])) {
+            $this->handleUpdate();
+        } elseif (isset($_POST['eliminar'])) {
+            $this->handleDelete();
         }
-            return $this->handleReturnAll();
     }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        if (isset($_GET['buscar'])) {
+            return $this->calificacionesModel->getCalificacion($_GET['buscar']);
+        } elseif (isset($_GET['cod_cur'])) {
+            return $this->calificacionesModel->getEstudiantesByCurso($_GET['cod_cur']);
+        }
+        return $this->handleReturnAll();
+    }
+}
+
 
     public function handleReturnAll()
     {
@@ -47,37 +50,59 @@ class CalificacionesController implements Controller{
         $fecha = $_POST['fecha'];
         $codInscripcion = $_POST['cod_inscripcion'];
         $nota = $_POST['nota'];
-        $notaExistente = $this->calificacionesModel->getNota($nota);
+        $calificaionExiste = $this->calificacionesModel->getCalificacion($codcalificacion);
 
-        if($notaExistente){
-                echo "<script>
+        $notaExistente = $this->calificacionesModel->getCalificacion($nota);
+        if (!empty($notaExistente) && $notaExistente[0]["nota"] == $nota && $notaExistente[0]["cod_inscripcion"] == $codInscripcion) {
+            // El estudiante ya tiene una calificación para esa nota
+            echo "<script>
                 document.addEventListener('DOMContentLoaded', function() {
-                    window.alert('El estudiante ya tiene una calificacion para esa nota.')
+                    window.alert('El estudiante ya tiene una calificacion para esa nota.');
                 });
             </script>";
-        } else {
-            $this->calificacionesModel->createCalificacion($codcalificacion, $valor, $fecha, $codInscripcion, $nota);
+        }elseif($calificaionExiste){
+                echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    window.alert('El código de calificacion ya existe. Por favor, elige otro código.')
+                });
+            </script>";
+        }else {
+            try {
+                $this->calificacionesModel->createCalificacion($codcalificacion, $valor, $fecha, $codInscripcion, $nota);
+            } catch (PDOException $e) {
+                if ($e->getCode() === '23514') {
+                        echo "<script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            window.alert('El valor de la nota solo acepta valores entre 0 y 5.')
+                        });
+                    </script>";
+                } 
+            }
         }
     }
 
     public function handleUpdate()
     {
-        $codcalificacion = $_POST['cod_cal'];
+        $codCalificacion = $_POST['cod_cal'];
         $valor = $_POST['valor'];
         $fecha = $_POST['fecha'];
         $codInscripcion = $_POST['cod_inscripcion'];
         $nota = $_POST['nota'];
-        $notaExistente = $this->calificacionesModel->getNota($nota);
-
-        if($notaExistente){
-                echo "<script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    window.alert('El estudiante ya tiene una calificacion para esa nota.')
-                });
-            </script>";
-        } else {
-            $this->calificacionesModel->updateCalificacion($codcalificacion, $valor, $fecha, $codInscripcion, $nota);
-        }
+        
+        $notaExistente = $this->calificacionesModel->getCalificacion($nota);
+        
+            try {
+                $this->calificacionesModel->updateCalificacion($codCalificacion, $valor, $fecha, $codInscripcion, $nota);
+            } catch (PDOException $e) {
+                if ($e->getCode() === '23514') {
+                        echo "<script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            window.alert('El valor de la nota solo acepta valores entre 0 y 5.')
+                        });
+                    </script>";
+                } 
+            }
+        
     }
     
     public function handleDelete()
@@ -91,9 +116,14 @@ class CalificacionesController implements Controller{
         return $this->calificacionesModel->getCursos();
     }
 
-    public function handleReturnInscripciones(){
-        $codCurso = $_POST['cod_cur'];
-        return $this->calificacionesModel->getInscripcion($codCurso);
+    public function handleReturnNotas()
+    {
+        return $this->calificacionesModel->getNotas();
+    }
+
+    public function handleReturnNotasByCursos($codCurso)
+    {
+        return $this->calificacionesModel->getNotasByCurso($codCurso);
     }
 
 }

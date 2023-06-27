@@ -4,7 +4,7 @@
     <tr>
         <td>
             <!-- Formulario para editar una inscripcion -->
-            <form method="POST" action="/views/inscripciones_view.php?view=true">
+            <form method="POST" action="/views/inscripciones_view.php">
                 <input type="hidden" name="cod_inscripcion" value="<?php echo $inscripcion['cod_inscripcion']; ?>">
                 <select name="periodo" placeholder="Nuevo periodo" required class="editable-select">
                     <option value="<?php echo $inscripcion['periodo']; ?>" selected><?php echo $inscripcion['periodo']; ?>
@@ -30,12 +30,12 @@
                             echo 'selected="selected"'; ?>><?php echo $estudiante['nomb_est']; ?></option>
                     <?php endforeach; ?>
                 </select>
-                <input type="submit" name="actualizar" value="Actualizar inscripcion">
+                <input type="submit" name="actualizar" value="Actualizar inscripcion" class="input-submit">
             </form>
         </td>
         <td>
             <!-- Formulario para eliminar una inscripcion -->
-            <form method="POST">
+            <form method="POST" action="/views/inscripciones_view.php">
                 <input type="hidden" name="cod_inscripcion" value="<?php echo $inscripcion['cod_inscripcion']; ?>">
                 <input type="submit" name="eliminar" value="Eliminar">
             </form>

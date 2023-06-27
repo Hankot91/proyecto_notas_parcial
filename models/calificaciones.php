@@ -8,12 +8,14 @@ class Calificaciones{
     private $dbConnection;
     private $notasModel;
     private $inscripcionesModel;
+    private $estudiantesModel;
 
     public function __construct(DatabaseConnection $dbConnection)
     {
         $this->dbConnection = $dbConnection;
         $this->notasModel = new Notas($dbConnection);
         $this->inscripcionesModel = new Inscripciones($dbConnection);
+        $this->estudiantesModel = new Estudiantes($dbConnection);
     }
 
     public function createCalificacion($codCalificacion, $valor, $fecha, $codInscripcion, $nota)
@@ -49,7 +51,7 @@ class Calificaciones{
     
     public function updateCalificacion($codCalificacion, $valor, $fecha, $codInscripcion, $nota)
     {
-        $query = "UPDATE calificacion SET valor = ?, fecha = ?, cod_inscripcion = ?, nota = ? WHERE cod_cal = ?";
+        $query = "UPDATE calificaciones SET valor = ?, fecha = ?, cod_inscripcion = ?, nota = ? WHERE cod_cal = ?";
         $stmt = $this->dbConnection->getConnection()->prepare($query);
         $stmt->execute([$valor, $fecha, $codInscripcion, $nota, $codCalificacion]);
     }
@@ -61,17 +63,47 @@ class Calificaciones{
         $stmt->execute([$codCalificacion]);
     }
 
-    public function getCursos(){
+    public function getCursos()
+    {
         return $this->inscripcionesModel->getCursos();
     }
 
-    public function getInscripcion($busqueda){
-        return $this->inscripcionesModel->getInscripcion($busqueda);
+    public function getInscripcion()
+    {
+        return $this->inscripcionesModel->getAllInscripciones();
     }
 
-    public function getNota($busqueda)
+    public function getNotas()
     {
-        return $this->notasModel->getNota($busqueda);
+        return $this->notasModel->getAllNotas();
+    }
+    
+    public function getEstudiantes()
+    {
+        return $this->estudiantesModel->getAllEstudiantes();
+    }
+
+    public function getEstudiantesByCurso($codCurso)
+    {
+        $query = "SELECT e.nomb_est, i.cod_inscripcion 
+        FROM estudiantes e 
+        INNER JOIN inscripciones i ON e.cod_est = i.cod_est 
+        WHERE i.cod_cur = ?";
+    
+        $stmt = $this->dbConnection->getConnection()->prepare($query);
+        $stmt->execute([$codCurso]);    
+        $estudiantesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $estudiantesData;
+    }
+
+    public function getNotasByCurso($codCurso)
+    {
+        $query = "SELECT * FROM notas WHERE cod_cur = ?";
+            
+        $stmt = $this->dbConnection->getConnection()->prepare($query);
+        $stmt->execute([$codCurso]);    
+        $notasData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $notasData;
     }
 
 }

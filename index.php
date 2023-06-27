@@ -17,6 +17,7 @@
     <a href="/views/cursos_view.php">Cursos</a>
     <a href="/views/inscripciones_view.php">Inscripciones</a>
     <a href="/views/notas_view.php">Notas</a>
+    <a href="/views/calificaciones_view.php">Calificaciones</a>
 
     
 </body>

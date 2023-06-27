@@ -15,7 +15,7 @@
                             echo 'selected="selected"'; ?>><?php echo $curso['nomb_cur']; ?></option>
                     <?php endforeach; ?>
                 </select>
-                <input type="submit" name="actualizar" value="Actualizar nota"> 
+                <input type="submit" name="actualizar" value="Actualizar nota" class="input-submit"> 
             </form>
         </td>
         <td>

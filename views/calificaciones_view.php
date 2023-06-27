@@ -1,42 +1,43 @@
 <?php
-require_once "../controllers/estudiantes_controller.php";
-$estudiantesData = (new EstudiantesController())->handleRequest();
-if(isset($_GET['buscar'])){
-    $notasData = (New EstudiantesController())->handleReturnCursosByEstudiante($_GET['buscar']);
-}
+require_once "../controllers/calificaciones_controller.php";
+$calificacionesData = (new CalificacionesController())->handleRequest();
+$cursosData = (new CalificacionesController())->handleReturnCursos();
+$notasData = (new CalificacionesController())->handleReturnNotas();
 $getView = isset($_GET['view']) || isset($_GET['buscar']);
 $getShow = isset($_GET['show']);
 $getRegister = isset($_GET['register']);
 
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <title>Estudiantes</title>
+    <title>Calificaciones</title>
 </head>
-
 <body>
     <header>
         <nav>
             <a href="../index.php">Inicio</a>
         </nav>
     </header>
-    <h1>ESTUDIANTES</h1>
-    <!--Busqueda de estudiante -->
+
+    <h1>CALIFICACIONES</h1>
+    <!--Busqueda de calificacioness -->
     <form method="GET">
         <input type="text" name="buscar" placeholder="Dato" required>
-        <input type="submit" value="Buscar estudiante">
+        <input type="submit" name="buscar_submit" value="Buscar">
     </form>
     <br>
 
-    <!--Llamado del template para registrar estudiantes -->
+
+    <!--Llamado del template para registrar calificaciones de estudiantes en cursos -->
     <?php if ($getRegister === true): ?>
-        <?php require_once "templates/estudiantes/registrar_estudiantes.php"; ?>
+        <?php require_once "templates/calificaciones/registrar_calificaciones.php"; ?>
     <?php else: ?>
         <form method="GET">
             <input type="hidden" name="register" value="true">
@@ -44,42 +45,33 @@ $getRegister = isset($_GET['register']);
         </form>
     <?php endif; ?>
 
-
     <?php if ($getView === false): ?>
         <br>
-        <a href="/views/estudiantes_view.php?view=true">Ver todos</a>
+        <a href="/views/calificaciones_view.php?view=true">Ver todos</a>
         <br>
         <?php require_once "footer.php"; ?>
     <?php else: ?>
-        <?php if (!empty($estudiantesData)): ?>
+        <?php if (!empty($calificacionesData)): ?>
             <!--Llamado del template para las acciones de estudiantes -->
             <?php if ($getShow === true): ?>
                 <br>
-                <a href="../views/estudiantes_view.php">Regresar</a>
+                <a href="../views/calificaciones_view.php">Regresar</a>
                 <br>
-                <?php require_once "templates/estudiantes/acciones_estudiantes.php" ?>
+                <?php require_once "templates/calificaciones/acciones_calificaciones.php" ?>
             <?php else: ?>
                 <!--Llamado del template para listar los estudiantes -->
                 <br>
-                <a href="../views/estudiantes_view.php">Ocultar</a>
+                <a href="../views/calificaciones_view.php">Ocultar</a>
                 <br>
-                <?php require_once "templates/estudiantes/lista_estudiantes.php" ?>
+                <?php require_once "templates/calificaciones/lista_calificaciones.php" ?>
             <?php endif; ?>
         <?php else: ?>
             <tr>
-                <td colspan="3">No hay registros.</td>
+                <td colspan="6">No hay registros.</td>
             </tr>
         <?php endif; ?>
         </table>
     <?php endif; ?>
-    <br>
-    <br>
-    
-    <?php if (!empty($notasData)): ?>
-        <?php require_once "templates/estudiantes/notas_estudiante.php"; ?>
-    <?php endif; ?>
-
-    <script src="js/estudiantes.js"></script>
+<script src="js/calificaciones.js"></script>
 </body>
-
 </html>

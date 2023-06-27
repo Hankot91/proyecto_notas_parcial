@@ -51,6 +51,19 @@ class Estudiantes
         $stmt->execute([$codEstudiante]);
     }
 
+    public function getNotasByEstudiante($codEstudiante)
+    {
+        $query = "SELECT * FROM obtener_calificaciones_ponderadas(?)";
+        $stmt = $this->dbConnection->getConnection()->prepare($query);
+        try {
+            $stmt->execute([$codEstudiante]);
+            $notasData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $notasData;
+        } catch (PDOException $e) {
+            return null;
+        }
+    }
+
 }
 
 

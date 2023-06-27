@@ -16,13 +16,14 @@ Array.from(selects).forEach(select => {
 let editCheckbox = document.getElementById('edit_checkbox');
 let  editableSelects = document.querySelectorAll('form .editable-select');
 let anhoSelect = document.querySelector('form .anho_edit');
+let inputSubmit = document.querySelector('form .input-submit');
 
 function toggleInputs() {
     let disabled = !editCheckbox.checked;
     for (var i = 0; i < editableSelects.length; i++) {
         editableSelects[i].disabled = disabled;
     }
-    anhoSelect.disabled = disabled;
+    anhoSelect.disabled = inputSubmit.disabled = disabled;
 }
 
 editCheckbox.addEventListener('change', toggleInputs);

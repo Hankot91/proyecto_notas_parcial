@@ -84,15 +84,66 @@ CREATE TRIGGER validar_porcentaje_trigger
     WHEN (NEW.cod_cur IS NOT NULL) 
     EXECUTE FUNCTION validar_porcentaje();
 
---copiando los datos de los csv
-COPY estudiantes FROM '../dates/estudiantes.csv' 
-WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'LATIN1');
 
-COPY cursos FROM '../dates/cursos.csv' 
-WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'LATIN1');
+--función para obtener las calificaciones ponderadas de manera dinamica
+CREATE OR REPLACE FUNCTION obtener_calificaciones_ponderadas(
+    codigo_estudiante INTEGER
+)
+RETURNS TABLE (
+    Curso VARCHAR,
+    Notas TEXT[],
+    Total DECIMAL(5,2)
+)
+AS $$
+DECLARE
+    curso_actual VARCHAR;
+    notas_actuales TEXT[];
+BEGIN
+    FOR curso_actual IN
+        SELECT DISTINCT cursos.nomb_cur
+        FROM
+            estudiantes
+            INNER JOIN inscripciones ON estudiantes.cod_est = inscripciones.cod_est
+            INNER JOIN cursos ON inscripciones.cod_cur = cursos.cod_cur
+        WHERE
+            estudiantes.cod_est = codigo_estudiante
+    LOOP
+        SELECT ARRAY_AGG(calificaciones.valor)
+        INTO notas_actuales
+        FROM
+            estudiantes
+            INNER JOIN inscripciones ON estudiantes.cod_est = inscripciones.cod_est
+            INNER JOIN cursos ON inscripciones.cod_cur = cursos.cod_cur
+            INNER JOIN calificaciones ON inscripciones.cod_inscripcion = calificaciones.cod_inscripcion
+            INNER JOIN notas ON calificaciones.nota = notas.nota
+        WHERE
+            estudiantes.cod_est = codigo_estudiante
+            AND cursos.nomb_cur = curso_actual;
 
-COPY cursos FROM '/../dates/inscripciones.csv' 
-WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'LATIN1');
+        SELECT
+            cursos.nomb_cur AS Curso,
+            notas_actuales AS Notas,
+            SUM(calificaciones.valor * notas.porcentaje / 100) AS Total
+        INTO
+            Curso,
+            Notas,
+            Total
+        FROM
+            estudiantes
+            INNER JOIN inscripciones ON estudiantes.cod_est = inscripciones.cod_est
+            INNER JOIN cursos ON inscripciones.cod_cur = cursos.cod_cur
+            INNER JOIN calificaciones ON inscripciones.cod_inscripcion = calificaciones.cod_inscripcion
+            INNER JOIN notas ON calificaciones.nota = notas.nota
+        WHERE
+            estudiantes.cod_est = codigo_estudiante
+            AND cursos.nomb_cur = curso_actual
+        GROUP BY
+            cursos.nomb_cur;
+
+        RETURN NEXT;
+    END LOOP;
+END;
+$$ LANGUAGE plpgsql;
 
 --si no sirve el "COPY" usar /copy
 \copy estudiantes FROM '../dates/estudiantes.csv' WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'latin1');
@@ -101,3 +152,24 @@ WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'LATIN1');
 
 \copy inscripciones FROM '../dates/inscripciones.csv' WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'latin1');
 
+\copy notas FROM '../dates/notas.csv' WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'latin1');
+
+\copy calificaciones FROM '../dates/calificaciones.csv' WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'latin1');
+
+--Funcion de prueba
+SELECT
+    cursos.nomb_cur AS Curso,
+    SUM(CASE WHEN notas.posicion = 1 THEN calificaciones.valor ELSE 0 END) AS "Nota #1",
+    SUM(CASE WHEN notas.posicion = 2 THEN calificaciones.valor ELSE 0 END) AS "Nota #2",
+    SUM(CASE WHEN notas.posicion = 3 THEN calificaciones.valor ELSE 0 END) AS "Nota #3",
+    SUM(calificaciones.valor * notas.porcentaje / 100) AS Total
+FROM
+    estudiantes
+    INNER JOIN inscripciones ON estudiantes.cod_est = inscripciones.cod_est
+    INNER JOIN cursos ON inscripciones.cod_cur = cursos.cod_cur
+    INNER JOIN calificaciones ON inscripciones.cod_inscripcion = calificaciones.cod_inscripcion
+    INNER JOIN notas ON calificaciones.nota = notas.nota
+WHERE
+    estudiantes.cod_est = 160004621
+GROUP BY
+    cursos.nomb_cur;

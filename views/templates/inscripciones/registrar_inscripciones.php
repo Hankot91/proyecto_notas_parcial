@@ -2,7 +2,7 @@
 <a href="inscripciones_view.php">Regresar</a>
 <h3><label for="form_agragar"> Formulario de inscripcion</label></h3>
 <form method="POST" action="/views/inscripciones_view.php?view=true">
-    <input type="number" maxlength="5" name="cod_inscripcion" placeholder="Código de inscripcion" required>
+    <input type="number" max="99999"  name="cod_inscripcion" placeholder="Código de inscripcion" required>
     <select name="periodo" placeholder="Periodo" required>
         <option disabled selected>Periodo</option>
         <option value="1">1</option>

@@ -13,7 +13,7 @@
                     <input type="hidden" name="cod_cur" value="<?php echo $curso['cod_cur']; ?>">
                     <input type="text" name="nomb_cur" placeholder="Nuevo nombre" required
                         value="<?php echo $curso['nomb_cur']; ?>" class="editable-input">
-                    <input type="submit" name="actualizar" value="Actualizar curso">
+                    <input type="submit" name="actualizar" value="Actualizar curso" class="input-submit">
                 </form>
             </td>
             <td>

@@ -71,6 +71,11 @@ class EstudiantesController implements Controller
         $codEstudiante = $_POST['cod_est'];
         $this->estudiantesModel->deleteEstudiante($codEstudiante);
     }
+
+    public function handleReturnCursosByEstudiante($codEstudiante)
+    {
+        return $this->estudiantesModel->getNotasByEstudiante($codEstudiante);
+    }
 }
 
 ?>
