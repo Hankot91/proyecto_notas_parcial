@@ -23,7 +23,7 @@ $getRegister = isset($_GET['register']);
 
 <body>
     <header class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="notas_view.php">Inicio</a>
+        <a class="navbar-brand" href="calificaciones_view.php">Inicio</a>
         <?php require_once "header.php"; ?>
     </header>
 
