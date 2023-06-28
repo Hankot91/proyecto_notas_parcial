@@ -16,8 +16,9 @@
                     <a class="nav-link" href="/views/calificaciones_view.php">CALIFICACIONES</a>
                 </li>
             </ul>
-            <form class="form-inline my-2">
-                <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
-                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Buscar</button>
-            </form>
+            <div class="container_logo">
+                <img src="/views/img/logo.png" class="img-fluid img-thumbnail" alt="Logo">
+            </div>
+
+    
         </div>

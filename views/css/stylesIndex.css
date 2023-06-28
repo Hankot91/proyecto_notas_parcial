@@ -109,3 +109,12 @@ input.editable-input.form-control-sm.rounded.input_cal {
   align-items: baseline;
   flex-wrap: wrap;
 }
+
+img.img-fluid.img-thumbnail {
+  background-color: #343a40;
+}
+
+.container_logo{
+  display: flex;
+  max-width: 6%;
+}
