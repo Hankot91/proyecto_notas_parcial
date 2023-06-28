@@ -19,15 +19,13 @@ $getRegister = isset($_GET['register']);
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/stylesIndex.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>Estudiantes</title>
 </head>
 
 <body>
-    <header>
-    <div class="panel">
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="../index.php?">Menu</a>
+    <header class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="estudiantes_view.php">Inicio</a>
         <?php require_once "header.php"; ?>
     </header>
 
@@ -46,13 +44,14 @@ $getRegister = isset($_GET['register']);
         <?php require_once "templates/estudiantes/registrar_estudiantes.php"; ?>
         <?php else: ?>
             <div class="container_form">
-            <h3 class="text-info fw-bold">ESTUDIANTES</h3>
-            <br>
-            <form method="GET">
-                <input type="hidden" name="register" value="true">
-                <button class="btn btn-primary me-3 ms-md-auto">Registro nuevo <i
-                class="fa-solid fa-circle-plus"></i></button>
-            </form>
+                <h3 class="text-info fw-bold">ESTUDIANTES</h3>
+                <br>
+                <form method="GET">
+                    <input type="hidden" name="register" value="true">
+                    <button class="btn btn-primary me-3 ms-md-auto">Registro nuevo <i
+                    class="fa-solid fa-circle-plus"></i></button>
+                </form>
+            </div>
     <?php endif; ?>
 
 
@@ -86,11 +85,11 @@ $getRegister = isset($_GET['register']);
                 <?php require_once "templates/estudiantes/lista_estudiantes.php" ?>
             <?php endif; ?>
         <?php else: ?>
-            <tr>
-                <td colspan="3">No hay registros.</td>
-            </tr>
+            <div class="container_form">
+                <h4 class="text-info fw-bold">No hay registros</h4>
+                <br>
+            </div>
         <?php endif; ?>
-        </table>
     <?php endif; ?>
     <br>
     <br>
@@ -100,4 +99,4 @@ $getRegister = isset($_GET['register']);
     <?php endif; ?>
 
     <script src="js/estudiantes.js"></script>
-    <?php require_once "footer.php"?>
+    <?php require_once "footer.php"?> 

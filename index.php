@@ -7,16 +7,14 @@
   <link rel="stylesheet" href="views/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="views/css/stylesIndex.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
   <title>SIAU 2.0</title>
 </head>
 
 <body>
-  <header>
-  <div class="panel">
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index.php?">Menu</a>
+  <header class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/index.php">INICIO</a>
     <?php require_once "views/header.php"; ?>
   </header>
 
@@ -47,7 +45,4 @@
   </main>
   <script src="views/js/bootstrap/popper.min.js"></script>
   <script src="views/js/bootstrap/bootstrap.min.js"></script>
-
-</body>
-
-</html>
+  <?php require_once "views/footer.php"?>

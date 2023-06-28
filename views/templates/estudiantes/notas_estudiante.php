@@ -1,5 +1,5 @@
 <h4 class="text-custom-color text-center">Notas del Estudiante</h4>
-    <table  class="table table-borderless table-striped table-success table-sm table-hover">
+    <table  class="table table-striped table-info thead-dark  table-hover">
         <tr>
             <th>Curso</th>
             <?php $maxNotas = 0; ?>

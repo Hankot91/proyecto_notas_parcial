@@ -1,18 +1,25 @@
 let editCheckbox = document.getElementById('edit_checkbox');
-let editableInputs = document.querySelectorAll('form .editable-input');
-let editableSelect = document.querySelector('form .editable-select');
-let editableText = document.querySelector('form .editable-text');
-let inputSubmit = document.querySelector('form .input-submit');
+let editableInputs = document.querySelectorAll('form input.editable-input, form select.editable-select, form textarea.editable-text');
+let inputSubmit = document.querySelector('.input-submit');
+let actualizarButton = document.querySelector('form [name="actualizar"]');
 
 editableInputs.forEach(function(input) {
     input.disabled = true;
 });
 
-editableSelect.disabled = editableText.disabled = inputSubmit.disabled = true;
+inputSubmit.disabled = true;
 
 editCheckbox.addEventListener('change', function() {
+    let isCheckboxChecked = editCheckbox.checked;
+
     editableInputs.forEach(function(input) {
-        input.disabled = !editCheckbox.checked;
+        input.disabled = !isCheckboxChecked;
     });
-    editableSelect.disabled = editableText.disabled = inputSubmit.disabled = !editCheckbox.checked;
+
+    inputSubmit.disabled = !isCheckboxChecked;
+
+});
+
+inputSubmit.addEventListener('click', function(e) {
+    actualizarButton.click();
 });

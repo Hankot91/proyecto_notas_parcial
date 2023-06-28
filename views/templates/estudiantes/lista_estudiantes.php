@@ -1,4 +1,4 @@
-<table class="table table-striped table-hover  table-dark">
+<table class="table table-striped table-hover table-sm  table-dark">
     <tr>
         <th>Código</th>
         <th>Nombre</th>
@@ -18,7 +18,7 @@
                 <form method="GET">
                     <input type="hidden" name="buscar" value="<?= $estudiante['cod_est']; ?>">
                     <input type="hidden" name="show" value="true">
-                    <button type="submit" value="Editar" class="btn btn-success">
+                    <button type="submit" value="Editar" class="btn btn-success"> 
                         <i class="fa-solid fa-user-pen"></i>
                     </button>
                 </form>
@@ -35,3 +35,4 @@
         </tr>
 
     <?php endforeach; ?>
+    </table>

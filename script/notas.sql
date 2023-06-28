@@ -123,7 +123,7 @@ BEGIN
         SELECT
             cursos.nomb_cur AS Curso,
             notas_actuales AS Notas,
-            SUM(calificaciones.valor * notas.porcentaje / 100) AS Total
+            SUM(calificaciones.valor * notas.porcentaje)/100 AS Total
         INTO
             Curso,
             Notas,
@@ -142,7 +142,7 @@ BEGIN
 
         RETURN NEXT;
     END LOOP;
-END;
+END
 $$ LANGUAGE plpgsql;
 
 --si no sirve el "COPY" usar /copy
@@ -156,20 +156,3 @@ $$ LANGUAGE plpgsql;
 
 \copy calificaciones FROM '../dates/calificaciones.csv' WITH (FORMAT CSV, DELIMITER ',', HEADER, ENCODING 'latin1');
 
---Funcion de prueba
-SELECT
-    cursos.nomb_cur AS Curso,
-    SUM(CASE WHEN notas.posicion = 1 THEN calificaciones.valor ELSE 0 END) AS "Nota #1",
-    SUM(CASE WHEN notas.posicion = 2 THEN calificaciones.valor ELSE 0 END) AS "Nota #2",
-    SUM(CASE WHEN notas.posicion = 3 THEN calificaciones.valor ELSE 0 END) AS "Nota #3",
-    SUM(calificaciones.valor * notas.porcentaje / 100) AS Total
-FROM
-    estudiantes
-    INNER JOIN inscripciones ON estudiantes.cod_est = inscripciones.cod_est
-    INNER JOIN cursos ON inscripciones.cod_cur = cursos.cod_cur
-    INNER JOIN calificaciones ON inscripciones.cod_inscripcion = calificaciones.cod_inscripcion
-    INNER JOIN notas ON calificaciones.nota = notas.nota
-WHERE
-    estudiantes.cod_est = 160004621
-GROUP BY
-    cursos.nomb_cur;
