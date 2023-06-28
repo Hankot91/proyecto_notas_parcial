@@ -22,6 +22,11 @@ $isEstudiantes = isset($_GET['cod_cur']);
                     <option value="<?php echo $curso['cod_cur']; ?>"><?php echo $curso['nomb_cur']; ?></option>
                 <?php endforeach; ?>
             </select>
+            <select name="periodo" placeholder="Periodo" id="periodo_select" class="form-select-sm  text-black" required>
+                <option disabled selected>Periodo</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
         </form>
     </div>
     <br>

@@ -31,7 +31,7 @@ class CalificacionesController implements Controller{
         if (isset($_GET['buscar'])) {
             return $this->calificacionesModel->getCalificacion($_GET['buscar']);
         } elseif (isset($_GET['cod_cur'])) {
-            return $this->calificacionesModel->getEstudiantesByCurso($_GET['cod_cur']);
+            return $this->calificacionesModel->getEstudiantesByCurso($_GET['cod_cur'], $_GET['periodo']);
         }
         return $this->handleReturnAll();
     }

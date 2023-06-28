@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
         let formCurso = document.getElementById('form_curso');
-        let selectCurso = document.getElementById('curso_select');
+        let selectCurso = document.getElementById('periodo_select');
 
         selectCurso.addEventListener('change', function () {
                 formCurso.submit();

@@ -81,19 +81,28 @@ class Calificaciones{
     public function getEstudiantes()
     {
         return $this->estudiantesModel->getAllEstudiantes();
-    }
+    } 
 
-    public function getEstudiantesByCurso($codCurso)
+    public function getEstudiantesByCurso($codCurso, $periodo)
     {
-        $query = "SELECT e.nomb_est, i.cod_inscripcion 
-        FROM estudiantes e 
-        INNER JOIN inscripciones i ON e.cod_est = i.cod_est 
-        WHERE i.cod_cur = ?";
-    
-        $stmt = $this->dbConnection->getConnection()->prepare($query);
-        $stmt->execute([$codCurso]);    
-        $estudiantesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $estudiantesData;
+        try {
+            $query = "SELECT e.nomb_est, i.cod_inscripcion 
+                    FROM estudiantes e 
+                    INNER JOIN inscripciones i ON e.cod_est = i.cod_est 
+                    INNER JOIN cursos c ON i.cod_cur = c.cod_cur
+                    WHERE i.cod_cur = ? AND i.periodo = ?";
+        
+            $stmt = $this->dbConnection->getConnection()->prepare($query);
+            $stmt->execute([$codCurso, $periodo]);    
+            $estudiantesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $estudiantesData;
+        } catch (PDOException $e) {
+            echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                window.alert('Algo salio mal con el registro, intentelo de nuevo.');
+            });
+        </script>";
+        }
     }
 
     public function getNotasByCurso($codCurso)
