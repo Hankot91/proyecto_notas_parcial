@@ -50,7 +50,7 @@ ON DELETE CASCADE ON UPDATE CASCADE;
 --Agragando los constrain y restricciones  a calificaciones
 ALTER TABLE calificaciones
 ADD CONSTRAINT fk_nota FOREIGN KEY (nota) REFERENCES notas (nota)
-ON DELETE RESTRICT ON UPDATE CASCADE;
+ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE calificaciones
 ADD CONSTRAINT fk_inscripciones FOREIGN KEY (cod_inscripcion)
