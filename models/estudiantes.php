@@ -29,7 +29,7 @@ class Estudiantes
 
     public function getEstudiante($busqueda)
     {
-       
+
 
         $query = "SELECT * FROM estudiantes WHERE CAST(cod_est AS TEXT) = ? OR nomb_est ILIKE ?";
         $stmt = $this->dbConnection->getConnection()->prepare($query);

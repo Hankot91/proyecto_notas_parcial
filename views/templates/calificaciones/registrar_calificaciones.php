@@ -46,7 +46,7 @@ $isEstudiantes = isset($_GET['cod_cur']);
                     <option disabled selected>Nota</option>
                     <?php foreach ($notasData as $nota): ?>
                         <?php if ($nota['cod_cur'] == $_GET['cod_cur']): ?>
-                            <option value="<?php echo $nota['nota']; ?>"><?php echo $nota['posicion']; ?></option>
+                            <option value="<?php echo $nota['nota']; ?>"><?php echo $nota['descrip_nota']; ?></option>
                             <?php endif; ?>
                             <?php endforeach; ?>
                         </select>
